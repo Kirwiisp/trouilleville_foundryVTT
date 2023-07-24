@@ -1,16 +1,17 @@
 {
 	"id": "trouilleville",
 	"title": "Trouilleville",
-	"description": "The Trouilleville system for FoundryVTT!",
-	"version": "1.2.0",
+	"description": "Unofficial Trouilleville System for FoundryVtt - FR/EN",
+	"version": "0.0.1",
 	"compatibility": {
-		"minimum": 10,
-		"verified": "10.287",
-		"maximum": 10
+		"minimum": 11,
+		"verified": "11.305"
 	},
 	"authors": [
 		{
-			"name": "Asacolips"
+			"name": "Kirwiisp",
+			"discord": "kirwiisp",
+			"url": ""
 		}
 	],
 	"esmodules": ["module/trouilleville.mjs"],
@@ -22,12 +23,14 @@
 			"lang": "en",
 			"name": "English",
 			"path": "lang/en.json"
+		},
+		{
+			"lang": "fr",
+			"name": "French (France)",
+			"path": "lang/fr.json"
 		}
 	],
-	"gridDistance": 5,
-	"gridUnits": "ft",
 	"primaryTokenAttribute": "health",
-	"secondaryTokenAttribute": "power",
 	"url": "",
 	"manifest": "",
 	"download": "",

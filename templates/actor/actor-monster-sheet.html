@@ -1,13 +1,13 @@
 <form class="{{cssClass}} {{actor.type}} flexcol" autocomplete="off">
 	{{!-- Sheet Header --}}
-	<header class="sheet-header">
+	<header class="sheet-header start">
 		<img
 			class="profile-img"
 			src="{{actor.img}}"
 			data-edit="img"
 			title="{{actor.name}}"
-			height="100"
-			width="100"
+			height="250"
+			width="150"
 		/>
 		<div class="header-fields">
 			<h1 class="charname">
@@ -25,11 +25,11 @@
 				{{!-- "flex-group-center" is also defined in the _grid.scss file and it
 				will add a small amount of padding, a border, and will center all of its
 				child elements content and text. --}}
-				<div class="resource flex-group-center">
+				<div class="resource align-content relative">
 					<img
-						class="no-border"
+						class="heart-container"
 						;
-						src="systems/trouilleville/assets/heart.svg"
+						src="systems/trouilleville/assets/rough_heart.svg"
 						alt="heart container"
 					/>
 					<label for="system.health.value" class="resource-label">Health</label>

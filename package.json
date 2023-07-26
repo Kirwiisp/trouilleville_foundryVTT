@@ -15,10 +15,13 @@
 	"license": "MIT",
 	"private": true,
 	"devDependencies": {
-		"gulp": "^3.9.1",
+		"gulp": "^4.0.2",
 		"gulp-autoprefixer": "^6.1.0",
 		"gulp-sass": "^5.1.0",
 		"gulp-sourcemaps": "^3.0.0",
 		"sass": "^1.53.0"
+	},
+	"dependencies": {
+		"npm": "^9.8.1"
 	}
 }

@@ -13,6 +13,17 @@ import { TROUILLEVILLE } from "./helpers/config.mjs";
 /* -------------------------------------------- */
 
 Hooks.once("init", async function () {
+	// initializing
+
+	console.log(`
+#######
+   #    #####   ####  #    # # #      #      ###### #    # # #      #      ###### 
+   #    #    # #    # #    # # #      #      #      #    # # #      #      #      
+   #    #    # #    # #    # # #      #      #####  #    # # #      #      #####  
+   #    #####  #    # #    # # #      #      #      #    # # #      #      #      
+   #    #   #  #    # #    # # #      #      #       #  #  # #      #      #      
+   #    #    #  ####   ####  # ###### ###### ######   ##   # ###### ###### ###### `);
+
 	// Add utility classes to the global game object so that they're more easily
 	// accessible in global contexts.
 	game.trouilleville = {

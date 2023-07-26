@@ -1,0 +1,22 @@
+{
+	"TROUILLEVILLE.AbilityStr": "Strength",
+	"TROUILLEVILLE.AbilityCon": "Constitution",
+	"TROUILLEVILLE.AbilityDex": "Dexterity",
+	"TROUILLEVILLE.AbilityInt": "Intelligence",
+	"TROUILLEVILLE.AbilityWis": "Wisdom",
+	"TROUILLEVILLE.AbilityCha": "Charisma",
+
+	"TROUILLEVILLE.AbilityStrAbbr": "str",
+	"TROUILLEVILLE.AbilityConAbbr": "con",
+	"TROUILLEVILLE.AbilityDexAbbr": "dex",
+	"TROUILLEVILLE.AbilityIntAbbr": "int",
+	"TROUILLEVILLE.AbilityWisAbbr": "wis",
+	"TROUILLEVILLE.AbilityChaAbbr": "cha",
+
+	"TROUILLEVILLE.EffectCreate": "Create Effect",
+	"TROUILLEVILLE.EffectToggle": "Toggle Effect",
+	"TROUILLEVILLE.EffectEdit": "Edit Effect",
+	"TROUILLEVILLE.EffectDelete": "Delete Effect",
+
+	"TROUILLEVILLE.Add": "Add"
+}

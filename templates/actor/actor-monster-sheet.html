@@ -32,7 +32,9 @@
 						src="systems/trouilleville/assets/rough_heart.svg"
 						alt="heart container"
 					/>
-					<label for="system.health.value" class="resource-label">Health</label>
+					<label for="system.health.value" class="resource-label"
+						>{{localize "Health"}}
+					</label>
 					<div
 						class="resource-content flexrow flex-center flex-between absolute"
 					>
@@ -52,36 +54,69 @@
 					</div>
 				</div>
 
-				<div class="resource flex-group-center">
-					<label for="system.power.value" class="resource-label">Power</label>
-					<div class="resource-content flexrow flex-center flex-between">
-						<input
-							type="text"
-							name="system.power.value"
-							value="{{system.power.value}}"
-							data-dtype="Number"
+				<div class="grid-start-2 grid-span-3 flex">
+					<div class="resource align-content relative">
+						<img
+							class="ring-container"
+							;
+							src="systems/trouilleville/assets/rough_double_ring.svg"
+							alt="ring container"
 						/>
-						<span> / </span>
-						<input
-							type="text"
-							name="system.power.max"
-							value="{{system.power.max}}"
-							data-dtype="Number"
-						/>
+						<label for="system.body.value" class="resource-label"
+							>{{localize "Body"}}
+						</label>
+						<div
+							class="resource-content flexrow flex-center flex-between absolute"
+						>
+							<input
+								type="text"
+								name="system.body.value"
+								value="{{system.body.value}}"
+								data-dtype="Number"
+							/>
+						</div>
 					</div>
-				</div>
-
-				<div class="resource flex-group-center">
-					<label for="system.attributes.level.value" class="resource-label"
-						>Level</label
-					>
-					<div class="resource-content flexrow flex-center flex-between">
-						<input
-							type="text"
-							name="system.attributes.level.value"
-							value="{{system.attributes.level.value}}"
-							data-dtype="Number"
+					<div class="resource align-content relative">
+						<img
+							class="ring-container"
+							;
+							src="systems/trouilleville/assets/rough_double_ring.svg"
+							alt="ring container"
 						/>
+						<label for="system.spirit.value" class="resource-label"
+							>{{localize "Spirit"}}
+						</label>
+						<div
+							class="resource-content flexrow flex-center flex-between absolute"
+						>
+							<input
+								type="text"
+								name="system.spirit.value"
+								value="{{system.spirit.value}}"
+								data-dtype="Number"
+							/>
+						</div>
+					</div>
+					<div class="resource align-content relative">
+						<img
+							class="ring-container"
+							;
+							src="systems/trouilleville/assets/rough_double_ring.svg"
+							alt="ring container"
+						/>
+						<label for="system.scare.value" class="resource-label"
+							>{{localize "Scare"}}
+						</label>
+						<div
+							class="resource-content flexrow flex-center flex-between absolute"
+						>
+							<input
+								type="text"
+								name="system.scare.value"
+								value="{{system.scare.value}}"
+								data-dtype="Number"
+							/>
+						</div>
 					</div>
 				</div>
 			</div>

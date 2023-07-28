@@ -36,6 +36,10 @@
 header.start {
 	align-items: flex-start;
 }
+.ring-container {
+	border: none;
+	position: absolute;
+}
 .heart-container {
 	border: none;
 	min-width: 150px;

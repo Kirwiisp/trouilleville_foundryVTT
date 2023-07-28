@@ -18,5 +18,9 @@
 	"TROUILLEVILLE.EffectEdit": "Edit Effect",
 	"TROUILLEVILLE.EffectDelete": "Delete Effect",
 
-	"TROUILLEVILLE.Add": "Add"
+	"TROUILLEVILLE.Add": "Add",
+	"Health": "Santé",
+	"Scare": "Frayeur",
+	"Body": "Corps",
+	"Spirit": "Esprit"
 }

@@ -21,104 +21,105 @@
 			{{!-- The grid classes are defined in scss/global/_grid.scss. To use, use
 			both the "grid" and "grid-Ncol" class where "N" can be any number from 1
 			to 12 and will create that number of columns. --}}
-			<div class="resources grid grid-3col">
+			<div class="resources grid grid-3col grid-center-items">
 				{{!-- "flex-group-center" is also defined in the _grid.scss file and it
 				will add a small amount of padding, a border, and will center all of its
-				child elements content and text. --}}
-				<div class="resource align-content relative">
-					<img
-						class="heart-container"
-						;
-						src="systems/trouilleville/assets/rough_heart.svg"
-						alt="heart container"
-					/>
+				child elements content and text. --}} {{!-- class="resource flex
+				flex-column align-content relative"--}}
+				<section class="health-section">
+					<div class="heart-display">
+						<div class="health-values-display">
+							<input
+								type="text"
+								name="system.health.value"
+								value="{{system.health.value}}"
+								data-dtype="Number"
+							/>
+							<input
+								type="text"
+								name="system.health.max"
+								value="{{system.health.max}}"
+								data-dtype="Number"
+							/>
+						</div>
+						<img
+							class="heart-container"
+							;
+							src="systems/trouilleville/assets/rough_heart.svg"
+							alt="heart container"
+						/>
+					</div>
 					<label for="system.health.value" class="resource-label"
 						>{{localize "Health"}}
 					</label>
-					<div
-						class="resource-content flexrow flex-center flex-between absolute"
-					>
-						<input
-							type="text"
-							name="system.health.value"
-							value="{{system.health.value}}"
-							data-dtype="Number"
-						/>
-						<span> / </span>
-						<input
-							type="text"
-							name="system.health.max"
-							value="{{system.health.max}}"
-							data-dtype="Number"
-						/>
-					</div>
-				</div>
+				</section>
 
-				<div class="grid-start-2 grid-span-3 flex">
-					<div class="resource align-content relative">
-						<img
-							class="ring-container"
-							;
-							src="systems/trouilleville/assets/rough_double_ring.svg"
-							alt="ring container"
-						/>
+				<section class="stats-section grid-start-2 grid-span-3">
+					<div class="stat-bloc">
+						<div class="stat-display">
+							<img
+								class="ring-container"
+								;
+								src="systems/trouilleville/assets/rough_double_ring.svg"
+								alt="ring container"
+							/>
+							<div class="ring-value-display">
+								<input
+									type="text"
+									name="system.body"
+									value="{{system.body}}"
+									data-dtype="Number"
+								/>
+							</div>
+						</div>
 						<label for="system.body.value" class="resource-label"
 							>{{localize "Body"}}
 						</label>
-						<div
-							class="resource-content flexrow flex-center flex-between absolute"
-						>
-							<input
-								type="text"
-								name="system.body.value"
-								value="{{system.body.value}}"
-								data-dtype="Number"
-							/>
-						</div>
 					</div>
-					<div class="resource align-content relative">
-						<img
-							class="ring-container"
-							;
-							src="systems/trouilleville/assets/rough_double_ring.svg"
-							alt="ring container"
-						/>
+					<div class="stat-bloc">
+						<div class="stat-display">
+							<img
+								class="ring-container"
+								;
+								src="systems/trouilleville/assets/rough_double_ring.svg"
+								alt="ring container"
+							/>
+							<div class="ring-value-display">
+								<input
+									type="text"
+									name="system.spirit"
+									value="{{system.spirit}}"
+									default=""
+									data-dtype="Number"
+								/>
+							</div>
+						</div>
 						<label for="system.spirit.value" class="resource-label"
 							>{{localize "Spirit"}}
 						</label>
-						<div
-							class="resource-content flexrow flex-center flex-between absolute"
-						>
-							<input
-								type="text"
-								name="system.spirit.value"
-								value="{{system.spirit.value}}"
-								data-dtype="Number"
-							/>
-						</div>
 					</div>
-					<div class="resource align-content relative">
-						<img
-							class="ring-container"
-							;
-							src="systems/trouilleville/assets/rough_double_ring.svg"
-							alt="ring container"
-						/>
+					<div class="stat-bloc">
+						<div class="stat-display">
+							<img
+								class="ring-container"
+								;
+								src="systems/trouilleville/assets/rough_double_ring.svg"
+								alt="ring container"
+							/>
+							<div class="ring-value-display">
+								<input
+									type="text"
+									name="system.scare"
+									value="{{system.scare}}"
+									data-dtype="Number"
+								/>
+							</div>
+						</div>
 						<label for="system.scare.value" class="resource-label"
 							>{{localize "Scare"}}
 						</label>
-						<div
-							class="resource-content flexrow flex-center flex-between absolute"
-						>
-							<input
-								type="text"
-								name="system.scare.value"
-								value="{{system.scare.value}}"
-								data-dtype="Number"
-							/>
-						</div>
 					</div>
-				</div>
+				</section>
 			</div>
 		</div>
 	</header>
@@ -126,10 +127,10 @@
 	{{!-- Sheet Tab Navigation --}}
 	<nav class="sheet-tabs tabs" data-group="primary">
 		{{!-- Default tab is specified in actor-sheet.mjs --}}
-		<a class="item" data-tab="features">Features</a>
-		<a class="item" data-tab="description">Description</a>
 		<a class="item" data-tab="items">Items</a>
 		<a class="item" data-tab="spells">Spells</a>
+		<a class="item" data-tab="description">Description</a>
+		<a class="item" data-tab="features">Features</a>
 		<a class="item" data-tab="effects">Effects</a>
 	</nav>
 

@@ -95,6 +95,13 @@ header.start {
 	position: absolute;
 	height: 100%;
 }
+.mana-container {
+	border: none;
+	max-width: 2.2rem;
+}
+.exp-display {
+	justify-content: space-around;
+}
 .stat-display {
 	height: 100%;
 	position: relative;

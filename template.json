@@ -14,7 +14,10 @@
 		},
 		"monster": {
 			"templates": ["base"],
-			"mana": 0,
+			"mana": {
+				"max": 6,
+				"current": 0
+			},
 			"exp": 0,
 			"objects": [],
 			"assets_spells": [],

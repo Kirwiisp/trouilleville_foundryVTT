@@ -1,4 +1,7 @@
-<form class="{{cssClass}} {{actor.type}} flexcol" autocomplete="off">
+<form
+	class="{{cssClass}} {{actor.type}} character-sheet flexcol"
+	autocomplete="off"
+>
 	{{!-- Sheet Header --}}
 	<header class="sheet-header start">
 		<img
@@ -45,7 +48,7 @@
 						<img
 							class="heart-container"
 							;
-							src="systems/trouilleville/assets/rough_heart.svg"
+							src="systems/trouilleville/assets/rough_heart_colored.svg"
 							alt="heart container"
 						/>
 					</div>
@@ -60,7 +63,7 @@
 							<img
 								class="ring-container"
 								;
-								src="systems/trouilleville/assets/rough_double_ring.svg"
+								src="systems/trouilleville/assets/rough_body_ring.svg"
 								alt="ring container"
 							/>
 							<div class="ring-value-display">
@@ -81,7 +84,7 @@
 							<img
 								class="ring-container"
 								;
-								src="systems/trouilleville/assets/rough_double_ring.svg"
+								src="systems/trouilleville/assets/rough_spirit_ring.svg"
 								alt="ring container"
 							/>
 							<div class="ring-value-display">
@@ -103,7 +106,7 @@
 							<img
 								class="ring-container"
 								;
-								src="systems/trouilleville/assets/rough_double_ring.svg"
+								src="systems/trouilleville/assets/rough_scare_ring.svg"
 								alt="ring container"
 							/>
 							<div class="ring-value-display">
@@ -121,17 +124,61 @@
 					</div>
 				</section>
 			</div>
+			<div class="grid grid-2col grid-center-items">
+				<div class="mana flex-column align-center">
+					<label for="" class="resource-label">{{localize "Mana"}}</label>
+					<div class="mana-stars flex">
+						<img
+							class="mana-container"
+							src="systems/trouilleville/assets/rough_filled_star.svg"
+							alt=""
+						/><img
+							class="mana-container"
+							src="systems/trouilleville/assets/rough_filled_star.svg"
+							alt=""
+						/><img
+							class="mana-container"
+							src="systems/trouilleville/assets/rough_empty_star.svg"
+							alt=""
+						/><img
+							class="mana-container"
+							src="systems/trouilleville/assets/rough_empty_star.svg"
+							alt=""
+						/><img
+							class="mana-container"
+							src="systems/trouilleville/assets/rough_empty_star.svg"
+							alt=""
+						/>
+					</div>
+				</div>
+				<div class="exp flex-column align-center">
+					<label for="" class="resource-label"
+						>{{localize "Experience"}}
+					</label>
+					<div class="exp-display flex">
+						<div class="exp-point exp-point-1">1</div>
+						<div class="exp-point exp-point-2">2</div>
+						<div class="exp-point exp-point-3">3</div>
+						<div class="exp-point exp-point-4">4</div>
+						<div class="exp-point exp-point-5">5</div>
+						<div class="exp-point exp-point-6">6</div>
+						<div class="exp-point exp-point-7">7</div>
+						<div class="exp-point exp-point-8">8</div>
+						<div class="exp-point exp-point-9">9</div>
+						<div class="exp-point exp-point-10">10</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</header>
 
 	{{!-- Sheet Tab Navigation --}}
 	<nav class="sheet-tabs tabs" data-group="primary">
 		{{!-- Default tab is specified in actor-sheet.mjs --}}
-		<a class="item" data-tab="items">Items</a>
-		<a class="item" data-tab="spells">Spells</a>
-		<a class="item" data-tab="description">Description</a>
-		<a class="item" data-tab="features">Features</a>
-		<a class="item" data-tab="effects">Effects</a>
+		<a class="item" data-tab="items">Atouts/Sortilèges</a>
+		<a class="item" data-tab="spells">Objets</a>
+		<a class="item" data-tab="description">Bio</a>
+		<a class="item" data-tab="effects">Notes</a>
 	</nav>
 
 	{{!-- Sheet Body --}}

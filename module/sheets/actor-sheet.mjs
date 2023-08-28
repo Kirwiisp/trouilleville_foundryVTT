@@ -227,6 +227,7 @@ export class TrouillevilleActorSheet extends ActorSheet {
 		if (dataset.roll) {
 			let label = dataset.label ? `${dataset.label}` : "";
 			let roll = new Roll(dataset.roll, this.actor.getRollData());
+
 			roll.toMessage({
 				speaker: ChatMessage.getSpeaker({ actor: this.actor }),
 				flavor: label,

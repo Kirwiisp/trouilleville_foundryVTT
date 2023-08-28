@@ -2,6 +2,11 @@
 	font-family: $font-primary;
 }
 
+> .window-content {
+	background-color: #fbfbfb !important;
+	background-image: none;
+}
+
 .sheet-header {
 	flex: 0 auto;
 	overflow: hidden;
@@ -10,6 +15,7 @@
 	flex-wrap: wrap;
 	justify-content: flex-start;
 	margin-bottom: 10px;
+	min-width: 580px !important;
 
 	.profile-img {
 		flex: 0 0 100px;
@@ -50,7 +56,7 @@ header.start {
 	position: relative;
 	height: 100%;
 	display: flex;
-	min-height: 90px;
+	max-height: 90px;
 	justify-content: center;
 }
 .heart-container {
@@ -68,9 +74,18 @@ header.start {
 		margin-top: -10px;
 		border: none;
 		background: none;
-		text-align: center;
 		font-size: 2em;
 		z-index: 1;
+	}
+	input:nth-child(1) {
+		text-align: end;
+	}
+	input:nth-child(2) {
+		text-align: start;
+	}
+	span {
+		width: 20px;
+		margin-left: 20px;
 	}
 }
 .stat-bloc {
@@ -89,6 +104,12 @@ header.start {
 	min-height: 90px;
 	justify-content: center;
 	align-items: center;
+}
+.dice-icon {
+	max-width: 1.5rem;
+	align-self: center;
+	border: none;
+	margin-right: -5px !important;
 }
 .ring-container {
 	border: none;

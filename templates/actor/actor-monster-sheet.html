@@ -38,6 +38,7 @@
 								value="{{system.health.value}}"
 								data-dtype="Number"
 							/>
+							<span></span>
 							<input
 								type="text"
 								name="system.health.max"
@@ -75,9 +76,20 @@
 								/>
 							</div>
 						</div>
-						<label for="system.body.value" class="resource-label"
-							>{{localize "Body"}}
-						</label>
+						<div
+							class="flex rollable"
+							data-roll="{{system.body}}d6cs>=4"
+							data-label="{{localize 'Body'}}"
+						>
+							<img
+								class="dice-icon"
+								src="systems/trouilleville/assets/dice.svg"
+								alt="dice icon-image"
+							/>
+							<label for="system.body.value" class="resource-label"
+								>{{localize "Body"}}
+							</label>
+						</div>
 					</div>
 					<div class="stat-bloc">
 						<div class="stat-display">
@@ -97,9 +109,20 @@
 								/>
 							</div>
 						</div>
-						<label for="system.spirit.value" class="resource-label"
-							>{{localize "Spirit"}}
-						</label>
+						<div
+							class="flex rollable"
+							data-roll="{{system.spirit}}d6cs>=4"
+							data-label="{{localize 'Spirit'}}"
+						>
+							<img
+								class="dice-icon"
+								src="systems/trouilleville/assets/dice.svg"
+								alt="dice icon-image"
+							/>
+							<label for="system.spirit.value" class="resource-label"
+								>{{localize "Spirit"}}
+							</label>
+						</div>
 					</div>
 					<div class="stat-bloc">
 						<div class="stat-display">
@@ -118,9 +141,20 @@
 								/>
 							</div>
 						</div>
-						<label for="system.scare.value" class="resource-label"
-							>{{localize "Scare"}}
-						</label>
+						<div
+							class="flex rollable"
+							data-roll="{{system.scare}}d6cs>=4"
+							data-label="{{localize 'Scare'}}"
+						>
+							<img
+								class="dice-icon"
+								src="systems/trouilleville/assets/dice.svg"
+								alt="dice icon-image"
+							/>
+							<label for="system.scare.value" class="resource-label"
+								>{{localize "Scare"}}
+							</label>
+						</div>
 					</div>
 				</section>
 			</div>

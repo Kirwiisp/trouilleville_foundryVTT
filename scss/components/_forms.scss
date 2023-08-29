@@ -115,9 +115,12 @@ header.start {
 	position: absolute;
 	height: 100%;
 }
+.mana-stars {
+	justify-content: center;
+}
 .mana-container {
 	border: none;
-	max-width: 2.2rem;
+	max-width: 1.8rem !important;
 }
 .exp-display {
 	justify-content: space-around;

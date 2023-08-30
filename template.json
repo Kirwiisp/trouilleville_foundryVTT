@@ -14,7 +14,7 @@
 		},
 		"monster": {
 			"templates": ["base"],
-			"mana": [false, false, true, true, true, true],
+			"mana": { "array": [false, false, true, true, true, true], "value": 0 },
 			"exp": 0,
 			"objects": [],
 			"assets_spells": [],

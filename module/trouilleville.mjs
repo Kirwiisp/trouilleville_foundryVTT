@@ -77,6 +77,57 @@ Handlebars.registerHelper("concat", function () {
 	return outStr;
 });
 
+Handlebars.registerHelper("ifCond", function (a, operator, b, options) {
+	let result = false;
+	switch (operator) {
+		case "==":
+			result = a == b;
+			break;
+		case "===":
+			result = a === b;
+			break;
+		case "!=":
+			result = a != b;
+			break;
+		case "!==":
+			result = a !== b;
+			break;
+		case "<":
+			result = +a < +b;
+			break;
+		case "<=":
+			result = +a <= +b;
+			break;
+		case ">":
+			result = +a > +b;
+			break;
+		case ">=":
+			result = +a >= +b;
+			break;
+		case "&&":
+			result = a && b;
+			break;
+		case "||":
+			result = a || b;
+			break;
+		case "includes":
+			result = a && b && a.includes(b);
+			break;
+
+		// *** Cats! specific ***
+		case "usableBy":
+			// CBH usableBy cat
+			result = a && b && a.includes(b.slice(0, 1).toUpperCase());
+			break;
+		default:
+			break;
+	}
+	if (typeof options.fn === "function") {
+		return result ? options.fn(this) : options.inverse(this);
+	}
+	return result;
+});
+
 Handlebars.registerHelper("toLowerCase", function (str) {
 	return str.toLowerCase();
 });

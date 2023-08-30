@@ -161,10 +161,11 @@
 			<div class="grid grid-2col grid-center-items">
 				<div class="mana flex-column align-center">
 					<label for="" class="resource-label">{{localize "Mana"}}</label>
-					<div class="flex mana-stars add-left-clic flex">
-						{{#each system.mana}} <img {{#if this}} data-label="{{this}}"
-						src="systems/trouilleville/assets/rough_empty_star.svg" {{else}}
-						src="systems/trouilleville/assets/rough_filled_star.svg" {{/if}}
+					<div class="flex mana-stars add-minus-mana flex">
+						{{#each data.system.mana.array}} <img {{#ifCond @index "<"
+						../system.mana.value }}
+						src="systems/trouilleville/assets/rough_filled_star.svg" {{else}}
+						src="systems/trouilleville/assets/rough_empty_star.svg" {{/ifCond}}
 						alt="" class="mana-container" /> {{/each}}
 					</div>
 				</div>

@@ -175,8 +175,33 @@ export class TrouillevilleActorSheet extends ActorSheet {
 				li.addEventListener("dragstart", handler, false);
 			});
 		}
-	}
 
+		// Add Minus mana control
+		html.find(".add-minus-mana").mousedown((ev) => {
+			this.manaModification(ev);
+		});
+	}
+	/**
+	 *
+	 * @param {*} event
+	 */
+	async manaModification(event) {
+		event.preventDefault();
+		event.stopPropagation();
+		//left clic
+		if (event.which == 1) {
+			if (this.object.system.mana.value < 6)
+				this.object.update({
+					"system.mana.value": this.object.system.mana.value + 1,
+				});
+		} //right clic
+		else if (event.which == 3) {
+			if (this.object.system.mana.value > 0)
+				this.object.update({
+					"system.mana.value": this.object.system.mana.value - 1,
+				});
+		} else console.log(`Error on manaModification event ; ${{ event }}`);
+	}
 	/**
 	 * Handle creating a new Owned Item for the actor using initial data defined in the HTML dataset
 	 * @param {Event} event   The originating click event

@@ -79,6 +79,7 @@ Handlebars.registerHelper("concat", function () {
 
 Handlebars.registerHelper("ifCond", function (a, operator, b, options) {
 	let result = false;
+
 	switch (operator) {
 		case "==":
 			result = a == b;
@@ -103,6 +104,7 @@ Handlebars.registerHelper("ifCond", function (a, operator, b, options) {
 			break;
 		case ">=":
 			result = +a >= +b;
+
 			break;
 		case "&&":
 			result = a && b;
@@ -112,14 +114,6 @@ Handlebars.registerHelper("ifCond", function (a, operator, b, options) {
 			break;
 		case "includes":
 			result = a && b && a.includes(b);
-			break;
-
-		// *** Cats! specific ***
-		case "usableBy":
-			// CBH usableBy cat
-			result = a && b && a.includes(b.slice(0, 1).toUpperCase());
-			break;
-		default:
 			break;
 	}
 	if (typeof options.fn === "function") {
@@ -156,18 +150,14 @@ async function createItemMacro(data, slot) {
 	// First, determine if this is a valid owned item.
 	if (data.type !== "Item") return;
 	if (!data.uuid.includes("Actor.") && !data.uuid.includes("Token.")) {
-		return ui.notifications.warn(
-			"You can only create macro buttons for owned Items"
-		);
+		return ui.notifications.warn("You can only create macro buttons for owned Items");
 	}
 	// If it is, retrieve it based on the uuid.
 	const item = await Item.fromDropData(data);
 
 	// Create the macro command using the uuid.
 	const command = `game.trouilleville.rollItemMacro("${data.uuid}");`;
-	let macro = game.macros.find(
-		(m) => m.name === item.name && m.command === command
-	);
+	let macro = game.macros.find((m) => m.name === item.name && m.command === command);
 	if (!macro) {
 		macro = await Macro.create({
 			name: item.name,
@@ -197,9 +187,7 @@ function rollItemMacro(itemUuid) {
 		// Determine if the item loaded and if it's an owned item.
 		if (!item || !item.parent) {
 			const itemName = item?.name ?? itemUuid;
-			return ui.notifications.warn(
-				`Could not find item ${itemName}. You may need to delete and recreate this macro.`
-			);
+			return ui.notifications.warn(`Could not find item ${itemName}. You may need to delete and recreate this macro.`);
 		}
 
 		// Trigger the item roll

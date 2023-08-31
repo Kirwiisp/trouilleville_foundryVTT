@@ -125,6 +125,14 @@ header.start {
 .exp-display {
 	justify-content: space-around;
 }
+.exp-point {
+	font-size: 1.4rem;
+}
+.crossed-line {
+	background-image: url(../assets/line.svg);
+	background-position: center;
+	background-size: cover;
+}
 .stat-display {
 	height: 100%;
 	position: relative;

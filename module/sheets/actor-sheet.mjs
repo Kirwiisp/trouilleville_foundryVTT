@@ -185,6 +185,9 @@ export class TrouillevilleActorSheet extends ActorSheet {
 		event.preventDefault();
 		event.stopPropagation();
 		//left clic
+		if (label == "health" && this.object.system.health.max == 0) {
+			alert("Veuillez saisir un nombre de pv max (partie droite)");
+		}
 		if (event.which == 1) {
 			if (this.object.system[label].value < this.object.system[label].max)
 				this.object.update({

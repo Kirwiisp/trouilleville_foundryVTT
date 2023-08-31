@@ -29,14 +29,15 @@
 	}
 
 	h1.charname {
-		height: 50px;
+		height: 40px;
 		padding: 0px;
-		margin: 5px 0;
+		margin: 5px 0 -10px;
 		border-bottom: 0;
 		input {
 			width: 100%;
 			height: 100%;
 			margin: 0;
+			background: #fffff1;
 		}
 	}
 }
@@ -113,20 +114,23 @@ header.start {
 .ring-container {
 	border: none;
 	position: absolute;
-	height: 100%;
+	height: 85% !important;
 }
 .mana-stars {
 	justify-content: center;
 }
 .mana-container {
 	border: none;
-	max-width: 1.8rem !important;
+	max-width: 1.4rem !important;
 }
 .exp-display {
-	justify-content: space-around;
+	justify-content: center;
+	align-items: center;
+	gap: 4px;
+	height: 64px;
 }
 .exp-point {
-	font-size: 1.4rem;
+	font-size: 1.2rem;
 }
 .crossed-line {
 	background-image: url(../assets/line.svg);
@@ -148,7 +152,24 @@ header.start {
 		border: none;
 	}
 }
-
+.weakness {
+	.weaknesses {
+		flex-direction: column;
+		gap: 5px;
+		width: 100%;
+		input {
+			background: #fffff1;
+		}
+	}
+}
+.add-minus:hover {
+	color: #000;
+	text-shadow: 0 0 10px red;
+	cursor: pointer;
+}
+.exp-display.add-minus:hover {
+	text-shadow: none;
+}
 .sheet-tabs {
 	flex: 0;
 }

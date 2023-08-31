@@ -5,6 +5,7 @@
 			"base": {
 				"health": {
 					"max": 0,
+					"min": 0,
 					"value": 0
 				},
 				"body": 0,
@@ -16,6 +17,10 @@
 			"templates": ["base"],
 			"mana": { "array": [false, false, true, true, true, true], "value": 0, "min": 0, "max": 6 },
 			"exp": { "value": 3, "min": 0, "max": 10 },
+			"weaknesses": {
+				"first": "",
+				"second": ""
+			},
 			"objects": [],
 			"assets_spells": [],
 			"story": "",

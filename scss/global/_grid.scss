@@ -8,6 +8,13 @@
 	margin: 10px 0;
 	padding: 0;
 }
+.grid-2row {
+	display: grid;
+	grid-row: span 2;
+	gap: 10px;
+	margin: 10px 0;
+	padding: 0;
+}
 
 .grid-3col {
 	grid-column: span 3 / span 3;

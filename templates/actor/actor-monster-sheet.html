@@ -26,7 +26,9 @@
 							alt="heart container"
 						/>
 					</div>
-					<label for="system.health.value" class="resource-label">{{localize "Health"}} </label>
+					<label for="system.health.value" class="resource-label add-minus" data-label="health"
+						>{{localize "Health"}}
+					</label>
 				</section>
 
 				<section class="stats-section grid-start-2 grid-span-3">
@@ -109,6 +111,13 @@
 					</div>
 				</div>
 			</div>
+			<section class="weakness flex">
+				<label for="" class="resource-label">{{localize "Weaknesses"}} </label>
+				<div class="weaknesses flex">
+					<input type="text" name="system.weaknesses.first" value="{{system.weaknesses.first}}" id="" />
+					<input type="text" name="system.weaknesses.second" value="{{system.weaknesses.second}}" id="" />
+				</div>
+			</section>
 		</div>
 	</header>
 

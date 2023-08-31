@@ -1,7 +1,4 @@
-import {
-	onManageActiveEffect,
-	prepareActiveEffectCategories,
-} from "../helpers/effects.mjs";
+import { onManageActiveEffect, prepareActiveEffectCategories } from "../helpers/effects.mjs";
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
@@ -159,9 +156,7 @@ export class TrouillevilleActorSheet extends ActorSheet {
 		});
 
 		// Active Effect management
-		html
-			.find(".effect-control")
-			.click((ev) => onManageActiveEffect(ev, this.actor));
+		html.find(".effect-control").click((ev) => onManageActiveEffect(ev, this.actor));
 
 		// Rollable abilities.
 		html.find(".rollable").click(this._onRoll.bind(this));
@@ -177,30 +172,31 @@ export class TrouillevilleActorSheet extends ActorSheet {
 		}
 
 		// Add Minus mana control
-		html.find(".add-minus-mana").mousedown((ev) => {
-			this.manaModification(ev);
+		html.find(".add-minus").mousedown((ev) => {
+			const label = ev.currentTarget.dataset.label;
+			this.addMinus(ev, label);
 		});
 	}
 	/**
 	 *
 	 * @param {*} event
 	 */
-	async manaModification(event) {
+	async addMinus(event, label) {
 		event.preventDefault();
 		event.stopPropagation();
 		//left clic
 		if (event.which == 1) {
-			if (this.object.system.mana.value < 6)
+			if (this.object.system[label].value < this.object.system[label].max)
 				this.object.update({
-					"system.mana.value": this.object.system.mana.value + 1,
+					system: { [label]: { value: this.object.system[label].value + 1 } },
 				});
 		} //right clic
 		else if (event.which == 3) {
-			if (this.object.system.mana.value > 0)
+			if (this.object.system[label].value > this.object.system[label].min)
 				this.object.update({
-					"system.mana.value": this.object.system.mana.value - 1,
+					system: { [label]: { value: this.object.system[label].value - 1 } },
 				});
-		} else console.log(`Error on manaModification event ; ${{ event }}`);
+		} else console.log(`Error on addMinus event ; ${{ event }}`);
 	}
 	/**
 	 * Handle creating a new Owned Item for the actor using initial data defined in the HTML dataset

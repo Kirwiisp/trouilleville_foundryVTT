@@ -86,7 +86,7 @@
 			<div class="grid grid-2col grid-center-items">
 				<div class="mana flex-column align-center">
 					<label for="" class="resource-label">{{localize "Mana"}}</label>
-					<div class="flex mana-stars add-minus-mana flex">
+					<div class="flex mana-stars add-minus flex" data-label="mana">
 						{{#each data.system.mana.array}} <img {{#ifCond @index ">=" ../system.mana.value }}
 						src="systems/trouilleville/assets/rough_empty_star.svg" {{else}}
 						src="systems/trouilleville/assets/rough_filled_star.svg" {{/ifCond}} alt="" class="mana-container" />
@@ -94,18 +94,18 @@
 					</div>
 				</div>
 				<div class="exp flex-column align-center">
-					<label for="" class="resource-label add-minus">{{localize "Experience"}} </label>
-					<div class="exp-display flex">
-						<div class="exp-point exp-point-1 {{#ifCond system.exp ">=" 1 }}crossed-line{{/ifCond}}">1</div>
-						<div class="exp-point exp-point-2 {{#ifCond system.exp ">=" 2 }}crossed-line{{/ifCond}}">2</div>
-						<div class="exp-point exp-point-3 {{#ifCond system.exp ">=" 3 }}crossed-line{{/ifCond}}">3</div>
-						<div class="exp-point exp-point-4 {{#ifCond system.exp ">=" 4 }}crossed-line{{/ifCond}}">4</div>
-						<div class="exp-point exp-point-5 {{#ifCond system.exp ">=" 5 }}crossed-line{{/ifCond}}">5</div>
-						<div class="exp-point exp-point-6 {{#ifCond system.exp ">=" 6 }}crossed-line{{/ifCond}}">6</div>
-						<div class="exp-point exp-point-7 {{#ifCond system.exp ">=" 7 }}crossed-line{{/ifCond}}">7</div>
-						<div class="exp-point exp-point-8 {{#ifCond system.exp ">=" 8 }}crossed-line{{/ifCond}}">8</div>
-						<div class="exp-point exp-point-9 {{#ifCond system.exp ">=" 9 }}crossed-line{{/ifCond}}">9</div>
-						<div class="exp-point exp-point-10 {{#ifCond system.exp ">=" 10 }}crossed-line{{/ifCond}}">10</div>
+					<label for="" class="resource-label">{{localize "Experience"}} </label>
+					<div class="exp-display flex add-minus" data-label="exp">
+						<div class="exp-point exp-point-1 {{#ifCond system.exp.value ">=" 1 }}crossed-line{{/ifCond}}">1</div>
+						<div class="exp-point exp-point-2 {{#ifCond system.exp.value ">=" 2 }}crossed-line{{/ifCond}}">2</div>
+						<div class="exp-point exp-point-3 {{#ifCond system.exp.value ">=" 3 }}crossed-line{{/ifCond}}">3</div>
+						<div class="exp-point exp-point-4 {{#ifCond system.exp.value ">=" 4 }}crossed-line{{/ifCond}}">4</div>
+						<div class="exp-point exp-point-5 {{#ifCond system.exp.value ">=" 5 }}crossed-line{{/ifCond}}">5</div>
+						<div class="exp-point exp-point-6 {{#ifCond system.exp.value ">=" 6 }}crossed-line{{/ifCond}}">6</div>
+						<div class="exp-point exp-point-7 {{#ifCond system.exp.value ">=" 7 }}crossed-line{{/ifCond}}">7</div>
+						<div class="exp-point exp-point-8 {{#ifCond system.exp.value ">=" 8 }}crossed-line{{/ifCond}}">8</div>
+						<div class="exp-point exp-point-9 {{#ifCond system.exp.value ">=" 9 }}crossed-line{{/ifCond}}">9</div>
+						<div class="exp-point exp-point-10 {{#ifCond system.exp.value ">=" 10 }}crossed-line{{/ifCond}}">10</div>
 					</div>
 				</div>
 			</div>

@@ -14,8 +14,8 @@
 		},
 		"monster": {
 			"templates": ["base"],
-			"mana": { "array": [false, false, true, true, true, true], "value": 0 },
-			"exp": 3,
+			"mana": { "array": [false, false, true, true, true, true], "value": 0, "min": 0, "max": 6 },
+			"exp": { "value": 3, "min": 0, "max": 10 },
 			"objects": [],
 			"assets_spells": [],
 			"story": "",

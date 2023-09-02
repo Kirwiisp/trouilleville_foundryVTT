@@ -19,5 +19,20 @@
 	"TROUILLEVILLE.EffectDelete": "Delete Effect",
 
 	"TROUILLEVILLE.Add": "Add",
-	"Weaknesses": "Faiblesses"
+	"Experience": "Expérience",
+	"Mana": "Mana",
+	"Health": "Santé",
+	"Scare": "Frayeur",
+	"Body": "Corps",
+	"Spirit": "Esprit",
+	"Weakness": "Faiblesse",
+	"Weaknesses": "Faiblesses",
+	"Asset": "Atout",
+	"Assets": "Atouts",
+	"Spell": "Sortilège",
+	"Spells": "Sortilèges",
+	"Object": "Objet",
+	"Objects": "Objets",
+	"Story": "Histoire",
+	"Notes": "Notes"
 }

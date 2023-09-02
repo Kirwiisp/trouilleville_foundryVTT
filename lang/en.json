@@ -19,11 +19,18 @@
 	"TROUILLEVILLE.EffectDelete": "Delete Effect",
 
 	"TROUILLEVILLE.Add": "Add",
-	"Health": "Santé",
-	"Scare": "Frayeur",
-	"Body": "Corps",
-	"Spirit": "Esprit",
+	"Experience": "Experience",
+	"Mana": "Mana",
+	"Health": "Health",
+	"Scare": "Scare",
+	"Body": "Body",
+	"Spirit": "Spirit",
+	"Weakness": "Weakness",
 	"Weaknesses": "Weaknesses",
-	"Story": "Biographie",
+	"Asset": "Asset",
+	"Assets": "Assets",
+	"Spell": "Spell",
+	"Spells": "Spells",
+	"Story": "Story",
 	"Notes": "Notes"
 }

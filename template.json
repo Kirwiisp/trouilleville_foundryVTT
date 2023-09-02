@@ -39,7 +39,7 @@
 		}
 	},
 	"Item": {
-		"types": ["atout", "sortilège", "object"],
+		"types": ["asset", "spell", "object"],
 		"templates": {
 			"base": {
 				"description": "",
@@ -47,11 +47,11 @@
 				"bonus-roll": 0
 			}
 		},
-		"atout": {
+		"asset": {
 			"templates": ["base"],
 			"used-status": false
 		},
-		"sortilège": {
+		"spell": {
 			"templates": ["base"]
 		},
 		"object": {

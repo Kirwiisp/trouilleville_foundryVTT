@@ -16,7 +16,7 @@
 		"monster": {
 			"templates": ["base"],
 			"mana": { "array": [false, false, true, true, true, true], "value": 0, "min": 0, "max": 6 },
-			"exp": { "value": 3, "min": 0, "max": 10 },
+			"exp": { "value": 0, "min": 0, "max": 10 },
 			"weaknesses": {
 				"first": "",
 				"second": ""
@@ -39,6 +39,23 @@
 		}
 	},
 	"Item": {
-		"description": ""
+		"types": ["atout", "sortilège", "object"],
+		"templates": {
+			"base": {
+				"description": "",
+				"linked-stat": "",
+				"bonus-roll": 0
+			}
+		},
+		"atout": {
+			"templates": ["base"],
+			"used-status": false
+		},
+		"sortilège": {
+			"templates": ["base"]
+		},
+		"object": {
+			"templates": ["base"]
+		}
 	}
 }

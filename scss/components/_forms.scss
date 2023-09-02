@@ -178,6 +178,15 @@ header.start {
 .sheet-body .tab,
 .sheet-body .tab .editor {
 	height: 100%;
+	padding-bottom: 10px;
+}
+
+.story {
+	textarea {
+		resize: none;
+		background-color: #fbfbfb;
+		border: 1px solid gray;
+	}
 }
 
 .tox {

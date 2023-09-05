@@ -36,9 +36,6 @@
 
 	h1.charname {
 		height: 40px;
-		padding: 0px;
-		margin: 5px 0 -10px;
-		border-bottom: 0;
 		input {
 			width: 100%;
 			height: 100%;
@@ -46,6 +43,11 @@
 			background: #fffff1;
 		}
 	}
+}
+.actor .charname {
+	padding: 0px;
+	margin: 5px 0 -10px;
+	border-bottom: 0;
 }
 header.start {
 	align-items: flex-start;
@@ -189,7 +191,10 @@ header.start {
 
 .story {
 	textarea {
+		font-family: "Roboto", "sans-serif";
 		resize: none;
+		font-size: 14px;
+		color: var(--color-text-dark-primary);
 		background-color: #fbfbfb;
 		border: 1px solid gray;
 	}
@@ -203,4 +208,8 @@ header.start {
 	.tox-edit-area {
 		padding: 0 8px;
 	}
+}
+
+.displayed * {
+	display: revert !important;
 }

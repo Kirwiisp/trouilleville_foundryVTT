@@ -21,7 +21,7 @@
 				"first": "",
 				"second": ""
 			},
-			"objects": [],
+			"objects": "",
 			"assets_spells": [],
 			"story": "",
 			"friends&Family": "",
@@ -39,7 +39,7 @@
 		}
 	},
 	"Item": {
-		"types": ["asset", "spell", "object"],
+		"types": ["object"],
 		"templates": {
 			"base": {
 				"description": "",
@@ -47,15 +47,9 @@
 				"bonus-roll": 0
 			}
 		},
-		"asset": {
+		"object": {
 			"templates": ["base"],
 			"used-status": false
-		},
-		"spell": {
-			"templates": ["base"]
-		},
-		"object": {
-			"templates": ["base"]
 		}
 	}
 }

@@ -86,16 +86,16 @@
 				</section>
 			</div>
 			<div class="grid grid-2col grid-center-items">
-				<div class="mana flex-column align-center">
+				<div class="mana flex-column align-center justify-center text-center">
 					<label for="" class="resource-label">{{localize "Mana"}}</label>
 					<div class="flex mana-stars add-minus flex" data-label="mana">
-						{{#each data.system.mana.array}} <img {{#ifCond @index ">=" ../system.mana.value }}
+						{{#each system.mana.array}} <img {{#ifCond @index ">=" ../system.mana.value }}
 						src="systems/trouilleville/assets/rough_empty_star.svg" {{else}}
 						src="systems/trouilleville/assets/rough_filled_star.svg" {{/ifCond}} alt="" class="mana-container" />
 						{{/each}}
 					</div>
 				</div>
-				<div class="exp flex-column align-center">
+				<div class="exp flex-column align-center justify-center text-center">
 					<label for="" class="resource-label">{{localize "Experience"}} </label>
 					<div class="exp-display flex add-minus" data-label="exp">
 						<div class="exp-point exp-point-1 {{#ifCond system.exp.value ">=" 1 }}crossed-line{{/ifCond}}">1</div>

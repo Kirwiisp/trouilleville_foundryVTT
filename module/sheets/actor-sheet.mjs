@@ -45,9 +45,9 @@ export class TrouillevilleActorSheet extends ActorSheet {
 		context.flags = actorData.flags;
 
 		// Prepare character data and items.
-		if (actorData.type == "character") {
+		if (actorData.type == "monster") {
 			this._prepareItems(context);
-			this._prepareCharacterData(context);
+			// this._prepareCharacterData(context);
 		}
 
 		// Prepare NPC data and items.
@@ -87,44 +87,21 @@ export class TrouillevilleActorSheet extends ActorSheet {
 	 */
 	_prepareItems(context) {
 		// Initialize containers.
-		const gear = [];
-		const features = [];
-		const spells = {
-			0: [],
-			1: [],
-			2: [],
-			3: [],
-			4: [],
-			5: [],
-			6: [],
-			7: [],
-			8: [],
-			9: [],
-		};
-
+		const objects = [];
+		const elseTEMP = [];
+		console.log("CONTEXT");
+		console.log(context);
 		// Iterate through items, allocating to containers
-		for (let i of context.items) {
+		for (let i of context.system.objects) {
 			i.img = i.img || DEFAULT_TOKEN;
 			// Append to gear.
-			if (i.type === "item") {
-				gear.push(i);
-			}
-			// Append to features.
-			else if (i.type === "feature") {
-				features.push(i);
-			}
-			// Append to spells.
-			else if (i.type === "spell") {
-				if (i.system.spellLevel != undefined) {
-					spells[i.system.spellLevel].push(i);
-				}
+			if (i.type === "object") {
+				objects.push(i);
 			}
 		}
 
 		// Assign and return
-		context.gear = gear;
-		context.features = features;
-		context.spells = spells;
+		context.objects = objects;
 	}
 
 	/* -------------------------------------------- */
@@ -221,6 +198,7 @@ export class TrouillevilleActorSheet extends ActorSheet {
 			type: type,
 			system: data,
 		};
+		console.log(itemData);
 		// Remove the type from the dataset since it's in the itemData.type prop.
 		delete itemData.system["type"];
 

@@ -19,11 +19,16 @@
 	"TROUILLEVILLE.EffectDelete": "Delete Effect",
 
 	"TROUILLEVILLE.Add": "Add",
+
+	"Name": "Nom",
+	"Add item": "Ajouter objet",
+	"Quantity": "Quantité",
 	"Experience": "Expérience",
+	"Linked stat": "Statistique liée",
 	"Mana": "Mana",
 	"Health": "Santé",
 	"Scare": "Frayeur",
-	"Body": "Corps",
+	"Body": "Corp",
 	"Spirit": "Esprit",
 	"Weakness": "Faiblesse",
 	"Weaknesses": "Faiblesses",

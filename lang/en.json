@@ -19,7 +19,11 @@
 	"TROUILLEVILLE.EffectDelete": "Delete Effect",
 
 	"TROUILLEVILLE.Add": "Add",
+	"Name": "Name",
+	"Add item": "Add item",
+	"Quantity": "Quantity",
 	"Experience": "Experience",
+	"Linked stat": "Linked stat",
 	"Mana": "Mana",
 	"Health": "Health",
 	"Scare": "Scare",

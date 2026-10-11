@@ -1,0 +1,62 @@
+{{!-- FR-010: a combined Atouts/Sortilèges list, an Objects list, and a Weaknesses list.
+      Atouts/Sortilèges and Objets side by side; Faiblesses full-width beneath both. --}}
+
+<div class="item-lists-columns">
+  <section class="item-list atouts-sortileges">
+    <header>
+      <h3>{{localize 'TROUILLEVILLE.TabAtoutsSortileges'}}</h3>
+      <button type="button" data-action="createEntry" data-type="atout-sortilege">
+        {{localize 'TROUILLEVILLE.AddEntry'}}
+      </button>
+    </header>
+    <ol>
+      {{#each atoutsSortileges as |entry|}}
+        <li class="item-row {{entry.type}}" data-action="editEntry" data-item-id="{{entry.id}}">
+          {{#if entry.costStars}}
+            <span class="sortilege-cost" aria-label="{{localize 'TROUILLEVILLE.Cost'}}">
+              {{#each entry.costStars}}
+                <span class="sortilege-cost-star"></span>
+              {{/each}}
+            </span>
+          {{/if}}
+          <span class="item-name">{{entry.name}}</span>
+          {{> "systems/trouilleville/templates/parts/item-row-controls.hbs"}}
+        </li>
+      {{/each}}
+    </ol>
+  </section>
+
+  <section class="item-list objets">
+    <header>
+      <h3>{{localize 'TROUILLEVILLE.TabObjets'}}</h3>
+      <button type="button" data-action="createEntry" data-type="objet">
+        {{localize 'TROUILLEVILLE.AddEntry'}}
+      </button>
+    </header>
+    <ol>
+      {{#each objets as |entry|}}
+        <li class="item-row objet" data-action="editEntry" data-item-id="{{entry.id}}">
+          <span class="item-name">{{entry.name}}</span>
+          {{> "systems/trouilleville/templates/parts/item-row-controls.hbs"}}
+        </li>
+      {{/each}}
+    </ol>
+  </section>
+</div>
+
+<section class="item-list faiblesses">
+  <header>
+    <h3>{{localize 'TROUILLEVILLE.TabFaiblesses'}}</h3>
+    <button type="button" data-action="createEntry" data-type="faiblesse">
+      {{localize 'TROUILLEVILLE.AddEntry'}}
+    </button>
+  </header>
+  <ol>
+    {{#each faiblesses as |entry|}}
+      <li class="item-row faiblesse" data-action="editEntry" data-item-id="{{entry.id}}">
+        <span class="item-name">{{entry.name}}</span>
+        {{> "systems/trouilleville/templates/parts/item-row-controls.hbs"}}
+      </li>
+    {{/each}}
+  </ol>
+</section>

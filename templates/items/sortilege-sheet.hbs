@@ -1,0 +1,23 @@
+<div class="trouilleville item sortilege">
+  <header class="sheet-header">
+    <input type="text" name="name" value="{{nameValue}}" placeholder="{{namePlaceholder}}" />
+  </header>
+
+  <div class="field">
+    <label>{{localize 'TROUILLEVILLE.Cost'}}</label>
+    <div class="modifier-input-group">
+      <button type="button" data-action="decrementModifier" data-field="cost"
+        aria-label="{{localize 'TROUILLEVILLE.DecrementModifier'}}">&minus;</button>
+      <input type="number" name="system.cost" value="{{system.cost}}" min="1" />
+      <button type="button" data-action="incrementModifier" data-field="cost"
+        aria-label="{{localize 'TROUILLEVILLE.IncrementModifier'}}">+</button>
+    </div>
+  </div>
+
+  <div class="field description">
+    <label>{{localize 'TROUILLEVILLE.Description'}}</label>
+    <textarea name="system.description">{{system.description}}</textarea>
+  </div>
+
+  {{> "systems/trouilleville/templates/parts/item-draft-footer.hbs"}}
+</div>

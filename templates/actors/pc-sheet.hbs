@@ -1,0 +1,137 @@
+<div class="trouilleville actor pc">
+  <section class="stat-block">
+    <header class="sheet-header">
+      <h1 class="charname"><input type="text" name="name" value="{{actor.name}}" placeholder="{{localize 'TROUILLEVILLE.Name'}}" /></h1>
+
+      <div class="field monster-kind">
+        {{#if (eq system.monsterKind.mode "linked")}}
+          <h3><span class="monster-kind-name">{{system.monsterKind.name}}</span></h3>
+          <button type="button" class="unlink-monster-kind" data-action="unlinkMonsterKind"
+            title="{{localize 'TROUILLEVILLE.UnlinkMonsterKind'}}"
+            aria-label="{{localize 'TROUILLEVILLE.UnlinkMonsterKind'}}">&times;</button>
+        {{else}}
+          <h3><input type="text" name="system.monsterKind.name" value="{{system.monsterKind.name}}"
+            placeholder="{{localize 'TROUILLEVILLE.MonsterKind'}}" aria-label="{{localize 'TROUILLEVILLE.MonsterKind'}}" /></h3>
+          {{#if monsterKindOptions.length}}
+            <select class="monster-kind-picker" aria-label="{{localize 'TROUILLEVILLE.ImportMonsterKind'}}">
+              <option value="">{{localize 'TROUILLEVILLE.ImportMonsterKind'}}</option>
+              {{#each monsterKindOptions}}
+                <option value="{{this.uuid}}">{{this.name}}</option>
+              {{/each}}
+            </select>
+          {{/if}}
+        {{/if}}
+      </div>
+    </header>
+
+    <div class="portrait-stats-row">
+      <button type="button" class="profile-img-button" data-action="editImage"
+        aria-label="{{localize 'TROUILLEVILLE.EditPortrait'}}">
+        <img class="profile-img" src="{{portraitSrc}}" alt="{{actor.name}}" />
+      </button>
+
+      <div class="stat-main">
+        <div class="health-stats-row">
+          <section class="health-section">
+            <div class="heart-display">
+              <img class="heart-container" src="systems/trouilleville/assets/rough_heart_colored.svg" alt="" />
+              <img class="heart-container heart-current-tint"
+                src="systems/trouilleville/assets/rough_heart_current.svg" alt="" />
+              <span class="heart-current-red-overlay" style="opacity: {{healthRedOpacity}};" aria-hidden="true"></span>
+              <div class="health-values-display">
+                <input type="number" name="system.health.value" value="{{system.health.value}}" />
+                <span>/</span>
+                <input type="number" name="system.health.max" value="{{system.health.max}}" />
+              </div>
+            </div>
+            <label>{{localize 'TROUILLEVILLE.Health'}}</label>
+          </section>
+
+          <section class="stats-section">
+            <div class="stat-bloc" data-characteristic="corps">
+              <div class="stat-display">
+                <img class="ring-container" src="systems/trouilleville/assets/rough_body_ring.svg" alt="" />
+                <div class="ring-value-display">
+                  <input type="number" name="system.corps" value="{{system.corps}}" />
+                </div>
+              </div>
+              <button type="button" class="rollable" data-action="rollCharacteristic" data-characteristic="corps"
+                aria-label="{{localize 'TROUILLEVILLE.RollCharacteristic' characteristic=(localize 'TROUILLEVILLE.Corps')}}">
+                <img class="dice-icon" src="systems/trouilleville/assets/dice.svg" alt="" />
+                <label>{{localize 'TROUILLEVILLE.Corps'}}</label>
+              </button>
+            </div>
+
+            <div class="stat-bloc" data-characteristic="esprit">
+              <div class="stat-display">
+                <img class="ring-container" src="systems/trouilleville/assets/rough_spirit_ring.svg" alt="" />
+                <div class="ring-value-display">
+                  <input type="number" name="system.esprit" value="{{system.esprit}}" />
+                </div>
+              </div>
+              <button type="button" class="rollable" data-action="rollCharacteristic" data-characteristic="esprit"
+                aria-label="{{localize 'TROUILLEVILLE.RollCharacteristic' characteristic=(localize 'TROUILLEVILLE.Esprit')}}">
+                <img class="dice-icon" src="systems/trouilleville/assets/dice.svg" alt="" />
+                <label>{{localize 'TROUILLEVILLE.Esprit'}}</label>
+              </button>
+            </div>
+
+            <div class="stat-bloc" data-characteristic="frayeur">
+              <div class="stat-display">
+                <img class="ring-container" src="systems/trouilleville/assets/rough_scare_ring.svg" alt="" />
+                <div class="ring-value-display">
+                  <input type="number" name="system.frayeur" value="{{system.frayeur}}" />
+                </div>
+              </div>
+              <button type="button" class="rollable" data-action="rollCharacteristic" data-characteristic="frayeur"
+                aria-label="{{localize 'TROUILLEVILLE.RollCharacteristic' characteristic=(localize 'TROUILLEVILLE.Frayeur')}}">
+                <img class="dice-icon" src="systems/trouilleville/assets/dice.svg" alt="" />
+                <label>{{localize 'TROUILLEVILLE.Frayeur'}}</label>
+              </button>
+            </div>
+          </section>
+        </div>
+
+        <div class="mana-exp-row">
+          <div class="field mana">
+            <label>{{localize 'TROUILLEVILLE.Mana'}}</label>
+            <div class="mana-stars">
+              {{#each manaStars}}
+                <button type="button" class="pip-button" data-action="setMana" data-value="{{this.value}}"
+                  aria-label="{{localize 'TROUILLEVILLE.SetMana' value=this.value}}">
+                  <img class="mana-container" src="{{this.src}}" alt="" />
+                </button>
+              {{/each}}
+            </div>
+          </div>
+
+          <div class="field experience">
+            <label>{{localize 'TROUILLEVILLE.Experience'}}</label>
+            <div class="exp-display">
+              {{#each expPoints}}
+                <button type="button" class="pip-button exp-point {{#if this.crossed}}crossed-line{{/if}}"
+                  data-action="setExperience" data-value="{{this.number}}" style="--tilt: {{this.tilt}}deg;"
+                  aria-label="{{localize 'TROUILLEVILLE.SetExperience' value=this.number}}">
+                  {{this.number}}
+                </button>
+              {{/each}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <nav class="sheet-tabs">
+    <a data-action="switchTab" data-tab="items" class="active">{{localize 'TROUILLEVILLE.TabAtoutsSortilegesObjets'}}</a>
+    <a data-action="switchTab" data-tab="histoire">{{localize 'TROUILLEVILLE.TabNotesHistoire'}}</a>
+  </nav>
+
+  <section class="tab active" data-tab="items">
+    {{> "systems/trouilleville/templates/parts/pc-item-lists.hbs"}}
+  </section>
+
+  <section class="tab" data-tab="histoire">
+    {{> "systems/trouilleville/templates/parts/pc-histoire.hbs"}}
+  </section>
+</div>

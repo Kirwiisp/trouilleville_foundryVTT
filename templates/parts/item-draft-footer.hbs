@@ -1,0 +1,10 @@
+{{!-- FR-026: a new Object/Atout/Sortilège/Weakness/Attack is a draft (temporary, unsaved) Item
+      until the GM explicitly confirms it here — Cancel (or closing the window) discards it with
+      nothing created. Included by every entry-type item sheet except Monster Type, which keeps
+      its existing standalone creation (FR-009: creatable with no actor involved at all). --}}
+{{#if isDraft}}
+  <footer class="draft-footer">
+    <button type="button" data-action="cancelDraft">{{localize 'TROUILLEVILLE.Cancel'}}</button>
+    <button type="button" data-action="saveDraft" class="primary">{{localize 'TROUILLEVILLE.Save'}}</button>
+  </footer>
+{{/if}}

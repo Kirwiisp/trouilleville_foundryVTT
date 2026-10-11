@@ -1,0 +1,124 @@
+# .github/workflows/release.yml
+# Release automatique d'un module ou système Foundry VTT.
+# Déclenchement : push d'un tag "v1.2.3" (ou "1.2.3"). La release GitHub
+# correspondante est créée automatiquement si elle n'existe pas encore.
+
+name: Release Foundry VTT
+
+on:
+  push:
+    tags:
+      - 'v*'
+      - '[0-9]+.[0-9]+.[0-9]+'
+
+permissions:
+  contents: write
+
+env:
+  # Optionnel : token de l'API Foundry (secret FOUNDRY_RELEASE_TOKEN) pour publier
+  # automatiquement la version sur foundryvtt.com. Laisser vide pour ignorer.
+  FOUNDRY_TOKEN: ${{ secrets.FOUNDRY_RELEASE_TOKEN }}
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # --- Décommentez si votre projet a une étape de build (npm, vite, etc.) ---
+      # - uses: actions/setup-node@v4
+      #   with:
+      #     node-version: 20
+      # - run: npm ci && npm run build
+
+      - name: Détection du manifest (module.json / system.json)
+        id: manifest
+        run: |
+          if [ -f system.json ]; then
+            echo "file=system.json" >> "$GITHUB_OUTPUT"
+            echo "zip=system.zip"   >> "$GITHUB_OUTPUT"
+          elif [ -f module.json ]; then
+            echo "file=module.json" >> "$GITHUB_OUTPUT"
+            echo "zip=module.zip"   >> "$GITHUB_OUTPUT"
+          else
+            echo "::error::Aucun module.json ou system.json à la racine du dépôt"
+            exit 1
+          fi
+
+      - name: Extraction de la version depuis le tag
+        id: version
+        run: |
+          TAG="${GITHUB_REF_NAME}"
+          VERSION="${TAG#v}"
+          echo "tag=$TAG"         >> "$GITHUB_OUTPUT"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "Tag: $TAG — Version: $VERSION"
+
+      - name: Mise à jour du manifest (version, manifest, download)
+        env:
+          FILE: ${{ steps.manifest.outputs.file }}
+          ZIP: ${{ steps.manifest.outputs.zip }}
+          TAG: ${{ steps.version.outputs.tag }}
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          REPO_URL="https://github.com/${GITHUB_REPOSITORY}"
+          # manifest -> toujours la dernière release (Foundry y détecte les mises à jour)
+          # download -> l'archive de CETTE release précise
+          jq --arg version  "$VERSION" \
+             --arg manifest "$REPO_URL/releases/latest/download/$FILE" \
+             --arg download "$REPO_URL/releases/download/$TAG/$ZIP" \
+             --arg url      "$REPO_URL" \
+             '.version = $version | .manifest = $manifest | .download = $download | .url = $url' \
+             "$FILE" > manifest.tmp && mv manifest.tmp "$FILE"
+          cat "$FILE"
+
+      - name: Création de l'archive
+        env:
+          ZIP: ${{ steps.manifest.outputs.zip }}
+        run: |
+          # src/ is NOT excluded: system.json's esmodules points straight at src/system.js with
+          # no build/bundle step, so it has to ship as-is for the system to actually load.
+          zip -r "$ZIP" . \
+            -x ".git/*" ".github/*" "node_modules/*" \
+               "*.zip" ".gitignore" ".editorconfig" "package*.json" \
+               "README.md" "*.log"
+          unzip -l "$ZIP"
+
+      - name: Création de la release GitHub si elle n'existe pas
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ steps.version.outputs.tag }}
+        run: |
+          if ! gh release view "$TAG" >/dev/null 2>&1; then
+            gh release create "$TAG" --title "$TAG" --generate-notes
+          fi
+
+      - name: Upload du manifest et de l'archive sur la release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          FILE: ${{ steps.manifest.outputs.file }}
+          ZIP: ${{ steps.manifest.outputs.zip }}
+          TAG: ${{ steps.version.outputs.tag }}
+        run: gh release upload "$TAG" "$FILE" "$ZIP" --clobber
+
+      # --- Optionnel : publication sur foundryvtt.com via l'API Package Release ---
+      - name: Publication sur foundryvtt.com
+        if: env.FOUNDRY_TOKEN != ''
+        env:
+          FILE: ${{ steps.manifest.outputs.file }}
+          TAG: ${{ steps.version.outputs.tag }}
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          REPO_URL="https://github.com/${GITHUB_REPOSITORY}"
+          PAYLOAD=$(jq -n \
+            --arg id       "$(jq -r '.id' "$FILE")" \
+            --arg version  "$VERSION" \
+            --arg manifest "$REPO_URL/releases/download/$TAG/$FILE" \
+            --arg notes    "$REPO_URL/releases/tag/$TAG" \
+            --argjson compat "$(jq '.compatibility' "$FILE")" \
+            '{id: $id, "dry-run": false, release: {version: $version, manifest: $manifest, notes: $notes, compatibility: $compat}}')
+          curl -sf -X POST "https://api.foundryvtt.com/_api/packages/release_version/" \
+            -H "Content-Type: application/json" \
+            -H "Authorization: $FOUNDRY_TOKEN" \
+            -d "$PAYLOAD"

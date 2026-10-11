@@ -1,0 +1,27 @@
+{{!-- FR-011: an Attack list on the NPC's sheet. --}}
+
+<header>
+  <h2>{{localize 'TROUILLEVILLE.TabAttaques'}}</h2>
+  <button type="button" data-action="createEntry" data-type="attaque">
+    {{localize 'TROUILLEVILLE.AddEntry'}}
+  </button>
+</header>
+<ol>
+  {{#each attaques as |entry|}}
+    <li class="item-row attaque" data-action="editEntry" data-item-id="{{entry.id}}">
+      <span class="item-name">{{entry.name}}</span>
+      {{#if entry.hasDamage}}
+        <span class="attack-damage">
+          <span class="attack-damage-icon" aria-hidden="true"></span>
+          {{entry.damage}}
+        </span>
+      {{/if}}
+      <button type="button" class="apply-damage" data-action="applyDamage" data-item-id="{{entry.id}}"
+        aria-label="{{localize 'TROUILLEVILLE.ApplyDamage' name=entry.name}}">
+        <img class="apply-damage-icon" src="systems/trouilleville/assets/target.svg" alt="" />
+      </button>
+      <button type="button" class="delete-entry" data-action="deleteEntry" data-item-id="{{entry.id}}"
+        aria-label="{{localize 'TROUILLEVILLE.DeleteEntry' name=entry.name}}">&times;</button>
+    </li>
+  {{/each}}
+</ol>

@@ -1,0 +1,42 @@
+<div class="trouilleville item objet">
+  <header class="sheet-header">
+    <input type="text" name="name" value="{{nameValue}}" placeholder="{{namePlaceholder}}" />
+  </header>
+
+  <div class="field">
+    <label>{{localize 'TROUILLEVILLE.Modifier'}}</label>
+    <div class="modifier-input-group">
+      <button type="button" data-action="decrementModifier" data-field="modifier"
+        aria-label="{{localize 'TROUILLEVILLE.DecrementModifier'}}">&minus;</button>
+      <input type="number" name="system.modifier" value="{{system.modifier}}" />
+      <button type="button" data-action="incrementModifier" data-field="modifier"
+        aria-label="{{localize 'TROUILLEVILLE.IncrementModifier'}}">+</button>
+    </div>
+  </div>
+
+  <div class="field">
+    <label>{{localize 'TROUILLEVILLE.LinkedCharacteristic'}}</label>
+    <select name="system.linkedCharacteristic">
+      <option value="">{{localize 'TROUILLEVILLE.GeneralModifier'}}</option>
+      <option value="corps" {{#if (eq system.linkedCharacteristic "corps")}}selected{{/if}}>{{localize 'TROUILLEVILLE.Corps'}}</option>
+      <option value="esprit" {{#if (eq system.linkedCharacteristic "esprit")}}selected{{/if}}>{{localize 'TROUILLEVILLE.Esprit'}}</option>
+      <option value="frayeur" {{#if (eq system.linkedCharacteristic "frayeur")}}selected{{/if}}>{{localize 'TROUILLEVILLE.Frayeur'}}</option>
+    </select>
+  </div>
+
+  <div class="field">
+    <label>{{localize 'TROUILLEVILLE.Usable'}}</label>
+    <label class="used-toggle" style="--check-tilt: 2deg;">
+      <input type="checkbox" name="system.usable" {{#if system.usable}}checked{{/if}}
+        aria-label="{{localize 'TROUILLEVILLE.Usable'}}" />
+      <span class="checkbox-box" aria-hidden="true"></span>
+    </label>
+  </div>
+
+  <div class="field description">
+    <label>{{localize 'TROUILLEVILLE.Description'}}</label>
+    <textarea name="system.description">{{system.description}}</textarea>
+  </div>
+
+  {{> "systems/trouilleville/templates/parts/item-draft-footer.hbs"}}
+</div>

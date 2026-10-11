@@ -1,0 +1,1289 @@
+/* All rules in this file MUST stay scoped beneath .trouilleville — Foundry shares one global
+   stylesheet space across every installed package (constitution Principle V). Never add a bare
+   element, .window-app, or other unscoped selector here. */
+
+.trouilleville {
+  --trouilleville-bg: #fbf4e6;
+  --trouilleville-panel: #ffffff;
+  --trouilleville-border: #e2d4b7;
+  --trouilleville-text: #2e2a22;
+  --trouilleville-text-muted: #6b6354;
+  --trouilleville-accent: #e86fa0;
+  /* Matches the rough_body_ring/rough_spirit_ring/rough_scare_ring.svg colors, so a modifier's
+     color ties back to the same characteristic's roll circle. */
+  --trouilleville-corps: #f2a5a0;
+  --trouilleville-esprit: #b8acdf;
+  --trouilleville-frayeur: #a8d99f;
+
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  height: 100%;
+  padding: 0.5rem;
+  background: var(--trouilleville-bg);
+  color: var(--trouilleville-text);
+  font-size: 0.95rem;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+
+.trouilleville * {
+  box-sizing: border-box;
+}
+
+.trouilleville input,
+.trouilleville select,
+.trouilleville textarea {
+  font: inherit;
+  color: var(--trouilleville-text);
+  background: var(--trouilleville-panel);
+  border: 1px solid var(--trouilleville-border);
+  border-radius: 6px;
+  padding: 0.35rem 0.5rem;
+}
+
+.trouilleville button {
+  font: inherit;
+  color: var(--trouilleville-text);
+  background: var(--trouilleville-panel);
+  border: 1px solid var(--trouilleville-border);
+  border-radius: 6px;
+  padding: 0.3rem 0.6rem;
+  cursor: pointer;
+}
+
+.trouilleville button:hover {
+  border-color: var(--trouilleville-accent);
+}
+
+.trouilleville label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--trouilleville-text-muted);
+  margin-bottom: 0.15rem;
+}
+
+/* ---------- Header ---------- */
+
+/* Name and Monster Type share one row instead of each taking its own line — stacked, the two ate
+   a disproportionate amount of vertical space for what they are. `align-items: baseline` looked
+   right in theory (Name is an <h1>, Monster Type an <h3> beside it — a classic title/subtitle
+   baseline pair) but didn't actually line up: Monster Type's wrapper is itself a flex container
+   (it also holds the unlink button / import picker), and a nested flex container's contribution
+   to an ancestor's baseline alignment is its own first baseline-participating descendant, which
+   doesn't reliably match "the text visually sits on this line" the way plain inline text would.
+   `flex-end` (align by the bottom edge of each box) sidesteps that ambiguity entirely and reads
+   just as correctly for a big title next to a smaller subtitle. */
+.trouilleville .sheet-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+/* Name reads as a page H1; Monster Type as a subtitle H3 beside it. Reset the heading elements'
+   own font sizing/weight/margin — the inner input/span controls the actual typography. */
+.trouilleville .charname {
+  flex: 0 0 auto;
+  margin: 0;
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+.trouilleville .charname input[name="name"] {
+  font-size: 2.5rem;
+  font-weight: 700;
+  padding: 0.15rem 0.35rem;
+  border-color: transparent;
+  background: transparent;
+}
+
+.trouilleville .charname input[name="name"]:hover,
+.trouilleville .charname input[name="name"]:focus {
+  border-color: var(--trouilleville-border);
+  background: var(--trouilleville-panel);
+}
+
+/* ---------- Stat block ---------- */
+
+.trouilleville .stat-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  background: var(--trouilleville-panel);
+  border: 1px solid var(--trouilleville-border);
+  border-radius: 10px;
+  padding: 0.5rem 0.6rem;
+}
+
+/* flex:1 (not content-sized/capped) — a 14rem cap was added earlier specifically to avoid a
+   long trailing dashed underline for nothing, but that underline was since removed outright
+   (reported as unwanted on its own) and the cap just left too little room: not enough for the
+   placeholder to show at all once the import <select> needs space too, and not enough for a
+   longer linked name before it started truncating. Nothing it still needs protecting against,
+   so it can just take the header's remaining space like Name does with its own. */
+.trouilleville .field.monster-kind {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.trouilleville .field.monster-kind h3 {
+  margin: 0;
+  flex: 1;
+  min-width: 0;
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+.trouilleville .field.monster-kind input[type="text"] {
+  width: 100%;
+  font-size: 0.95rem;
+  font-weight: 500;
+  font-style: italic;
+  color: var(--trouilleville-text-muted);
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  padding: 0.1rem 0.4rem;
+}
+
+.trouilleville .field.monster-kind input[type="text"]:hover,
+.trouilleville .field.monster-kind input[type="text"]:focus {
+  background: var(--trouilleville-panel);
+}
+
+.trouilleville .monster-kind-name {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 500;
+  font-style: italic;
+  color: var(--trouilleville-text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Hidden-until-hover, same idea as .delete-entry/.use-entry — "linked" mode otherwise always
+   showed a full-text "Délier le type de monstre" button, which both overflowed its own border
+   and pushed the monster kind's own name onto two lines inside .field.monster-kind's capped
+   width. A small icon only needs room when it's actually being looked at. */
+.trouilleville .unlink-monster-kind {
+  flex: 0 0 auto;
+  width: 1.25rem;
+  height: 1.25rem;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.05rem;
+  line-height: 1;
+  color: var(--trouilleville-text-muted);
+  background: transparent;
+  border-color: transparent;
+  opacity: 0.45;
+}
+
+.trouilleville .unlink-monster-kind:hover,
+.trouilleville .unlink-monster-kind:focus-visible {
+  opacity: 1;
+  color: #ffffff;
+  background: #c0392b;
+  border-color: #c0392b;
+}
+
+/* Shown only when Monster Type items exist to import (from a content module, say) — the
+   free-text field beside it always works whether or not any are installed. Hidden until the GM
+   clicks into the Monster Type area to change it (:focus-within keeps it visible while picking
+   an option, since the <select> itself is then the focused element, still inside
+   .field.monster-kind). */
+.trouilleville .monster-kind-picker {
+  display: none;
+  flex: 0 0 auto;
+  max-width: 14rem;
+  font-size: 0.8rem;
+  padding: 0.15rem 0.3rem;
+}
+
+.trouilleville .field.monster-kind:focus-within .monster-kind-picker {
+  display: inline-block;
+}
+
+/* The portrait is the left quarter and spans the full height of the stat block; the right
+   three quarters stack Health + the three characteristics, then Mana + Experience. */
+.trouilleville .portrait-stats-row {
+  display: flex;
+  align-items: stretch;
+  gap: 1rem;
+}
+
+.trouilleville .profile-img-button {
+  flex: 0 0 30%;
+  align-self: stretch;
+  min-height: 160px;
+  padding: 0;
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--trouilleville-panel);
+  line-height: 0;
+}
+
+/* `contain`, not `cover`: never crop a hand-drawn portrait (or Foundry's placeholder). */
+.trouilleville .profile-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 9px;
+}
+
+.trouilleville .stat-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.trouilleville .health-stats-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+/* Health: a heart image with the current/max values overlaid on top of it, aligned to the
+   heart's center seam (cf. heart.png) rather than the image's vertical middle. */
+.trouilleville .health-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.trouilleville .heart-display {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 78px;
+  height: 66px;
+}
+
+.trouilleville .heart-container {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+/* rough_heart_current.svg redraws only the left (current-health) lobe — white page backing, the
+   hand-drawn details clipped to that lobe, then its fills — so stacking it over the base
+   reproduces that lobe exactly. No CSS clip-path: the boundary is the artwork's own lobe
+   outline, curve and bottom point included.
+
+   The "closer to red as health drops" effect used to be a CSS `filter: hue-rotate()` applied
+   directly to that image — unreliable on this specific artwork (it has several of its own fill
+   colors — green, yellow-green, white, black outline — not one flat tone), and empirically
+   landed on pink rather than red. Replaced with a separate solid-red layer, masked to the exact
+   same lobe shape, stacked on top with its *opacity* increasing as health drops (0 at full
+   health — the lobe's native colors show through completely unchanged — towards 1 at zero
+   health, fully opaque, guaranteed to read as red since it's a flat color I chose directly, not
+   something computed by rotating a hue from an unpredictable starting color). */
+.trouilleville .heart-current-red-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #d7263d;
+  -webkit-mask-image: url("../assets/rough_heart_current.svg");
+  mask-image: url("../assets/rough_heart_current.svg");
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  pointer-events: none;
+}
+
+.trouilleville .health-values-display {
+  position: absolute;
+  top: 46%;
+  left: 0;
+  right: 0;
+  transform: translateY(-50%);
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+}
+
+/* A white outline behind the (colored) digits keeps them legible against the heart's own
+   color regardless of hue — plain text color alone had too little contrast against the tint. */
+.trouilleville .health-values-display input {
+  width: 2.15rem;
+  text-align: center;
+  background: transparent;
+  border-color: transparent;
+  font-size: 1.15rem;
+  font-weight: 700;
+  -webkit-text-stroke: 2.5px #ffffff;
+  paint-order: stroke fill;
+}
+
+.trouilleville .health-values-display input:first-child {
+  text-align: right;
+}
+
+.trouilleville .health-values-display input:last-child {
+  text-align: left;
+}
+
+.trouilleville .health-values-display span {
+  font-weight: 700;
+}
+
+.trouilleville .health-section > label {
+  margin: 0;
+}
+
+/* NPC-only Health/Trouille tracks (NpcSheet) — a label, a small outline icon, an editable max,
+   and a row of checkbox-styled pips filled up to however much is currently remaining. Replaces
+   the PC's own heart+number display and Mana/Experience for NPCs specifically: reported as a
+   better fit since an NPC's max isn't fixed the way Mana's 6 is, and it has neither Mana nor
+   Experience at all. */
+/* Fixed at half of stat-main's own width (not just "as wide as however many pips happen to be
+   filled") specifically so the whole row doesn't visibly resize/reflow every time the GM edits
+   Health or Trouille — before this, the track's width tracked its own pip count, so the layout
+   visibly jumped on every click. Centered within stat-main's column layout; Health sits above
+   Trouille, both above the three characteristics, rather than beside them the way a PC's own
+   Health sits beside its characteristics — reported as a better fit for an NPC's wider,
+   variable-length tracks. */
+/* align-items: flex-start, not center — center was still centering the whole .track-row block
+   (label too) within this section's own fixed 50% width, which is a DIFFERENT thing from
+   .track-row's own internal justify-content: the row's content started at its own left edge,
+   but that whole row-as-a-block was then re-centered inside this wider section, so its actual
+   on-screen position still shifted with pip count. flex-start anchors both the label and the
+   row to this section's own left edge, which is what actually keeps Health's and Trouille's
+   icons lined up regardless of either track's own max. */
+/* Full width of stat-main — half (the earlier request, before seeing it rendered) left visible
+   empty space to the right that the pip track couldn't use. */
+.trouilleville .track-section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.25rem;
+  width: 100%;
+}
+
+.trouilleville .track-section > label {
+  margin: 0;
+}
+
+/* flex-start, not center: Health and Trouille can have very different pip counts (different
+   maxes), so centering each row independently made their icons start at different horizontal
+   offsets — reported as inconsistent. Left-aligned, both rows' icons always start at the same
+   spot regardless of either track's own max. */
+/* nowrap, not wrap: the icon/max-input must stay put — only .track-pips (below, flex:1) is
+   meant to wrap onto further lines, within the width left over after them. Letting this row
+   itself wrap pushed the ENTIRE pips block onto its own line below the icon as soon as it
+   didn't fit, wasting the space still free on the icon's own line and misreporting as "no room
+   left" when there plainly was some. */
+.trouilleville .track-row {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+}
+
+.trouilleville .track-icon {
+  flex: 0 0 auto;
+  width: 2.1rem;
+  height: 2.1rem;
+}
+
+/* Both filled solid (not outline) via the mask-image + background-color technique used
+   throughout this system wherever an exact color is needed on hand-drawn art (.sortilege-cost-
+   star, .heart-current-red-overlay) — a plain <img> or CSS filter can't guarantee one exact
+   flat color the way a mask can. The heart masks a plain solid silhouette (assets/
+   heart_solid.svg), not rough_heart_colored.svg (the PC Health display's own busy, multi-tone
+   artwork) — using that one here produced a cracked, two-toned look instead of one flat color:
+   its own internal opacity/color variation still showed through the mask, reading as a visible
+   seam between the two lobes rather than a uniform fill. Tinted light green. The skull is its
+   own plain silhouette too (no eyes/nose — reported as unwanted detail at this size), tinted a
+   clearly darker green than the heart's. */
+.trouilleville .heart-icon {
+  background-color: #5fb85f;
+  -webkit-mask-image: url("../assets/heart_solid.svg");
+  mask-image: url("../assets/heart_solid.svg");
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+}
+
+.trouilleville .skull-icon {
+  background-color: #2d6a2d;
+  -webkit-mask-image: url("../assets/skull.svg");
+  mask-image: url("../assets/skull.svg");
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+}
+
+.trouilleville .track-max-input {
+  flex: 0 0 auto;
+  width: 2.3rem;
+  text-align: center;
+  font-weight: 700;
+  padding: 0.15rem 0.2rem;
+}
+
+.trouilleville .track-pips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.15rem;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+/* Looks like .used-toggle's checkbox (same .checkbox-box), but each pip is a plain click-to-set
+   button rather than an independently-toggled real checkbox — clicking pip N sets the track to
+   N remaining (or steps it down by one if already there, nextPipValue), the same convention as
+   Mana/Experience, rather than letting pips end up checked out of order. The checkmark itself
+   reuses .checkbox-box's own geometry, just triggered by a `.filled` class instead of
+   `:checked`, since there's no real underlying <input> here. */
+.trouilleville .track-pip {
+  background: transparent;
+  border: none;
+  padding: 0;
+  line-height: 1;
+}
+
+.trouilleville .track-pip:hover .checkbox-box {
+  border-color: var(--trouilleville-accent);
+}
+
+/* A rough, gap-filled scribble instead of a clean checkmark — reads as a child's own attempt
+   at coloring the box in with one messy stroke, rather than a tidy "done" tick like the PC
+   sheet's used-toggle checkboxes use. Masked (not a plain tinted <img>) for the same exact-color
+   reason as everything else masked in this file — plain black (reported as preferred over the
+   earlier per-track green tint), matching the ink color the rest of this sheet's hand-drawn
+   line work already uses. */
+/* Clipped to the box (unlike the PC sheet's own used-toggle checkmark, which deliberately
+   pokes past its border — scoped to .track-pip specifically, not the shared .checkbox-box base
+   rule, so that other checkmark keeps its own look). scribble.svg is a direct trace of a real
+   hand-drawn chalk scribble (dev/scribble.svg), already in the right orientation — no rotation
+   needed. */
+.trouilleville .track-pip .checkbox-box {
+  overflow: hidden;
+}
+
+.trouilleville .track-pip.filled .checkbox-box::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: var(--trouilleville-text);
+  -webkit-mask-image: url("../assets/scribble.svg");
+  mask-image: url("../assets/scribble.svg");
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+}
+
+/* Characteristics: a rough-ring image with the raw value overlaid, plus a separate
+   dice-icon + label control beneath it that triggers the roll (FR-017). flex-start, not center
+   — centering the characteristics independently of Health/Trouille's own left-anchored tracks
+   above them made the two visibly misalign (reported as "Health and Trouille are a bit right");
+   flex-start on both means they now share one common left edge down the column. */
+.trouilleville .stats-section {
+  display: flex;
+  justify-content: flex-start;
+  gap: 0.75rem;
+}
+
+.trouilleville .stat-bloc {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.trouilleville .stat-display {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 58px;
+  height: 58px;
+}
+
+.trouilleville .ring-container {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.trouilleville .ring-value-display {
+  position: relative;
+  z-index: 1;
+}
+
+.trouilleville .ring-value-display input {
+  width: 2rem;
+  text-align: center;
+  background: transparent;
+  border-color: transparent;
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.trouilleville .rollable {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: transparent;
+  border-color: transparent;
+  padding: 0.1rem 0.3rem;
+}
+
+.trouilleville .rollable:hover {
+  background: var(--trouilleville-bg);
+  border-color: var(--trouilleville-accent);
+}
+
+.trouilleville .rollable .dice-icon {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+.trouilleville .rollable label {
+  margin: 0;
+  cursor: pointer;
+}
+
+/* Both Mana and Experience are click-to-set pip rows — no plain number input. A pip-button
+   resets the generic .trouilleville button chrome (no border/background box) since these are
+   meant to read as stars/points, not as buttons. */
+.trouilleville .pip-button {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  line-height: 1;
+}
+
+.trouilleville .pip-button:hover {
+  filter: brightness(0.92);
+}
+
+.trouilleville .pip-button:focus-visible {
+  outline: 2px solid var(--trouilleville-accent);
+  outline-offset: 2px;
+}
+
+/* Mana and Experience sit side by side on one shared row, beneath Health/Characteristics — and
+   still wrap onto two rows if the window is resized narrower, same as Health/Characteristics
+   above (flex-wrap handles both automatically). Pip sizes/gaps below are kept tight so this
+   fits as one row at the sheet's normal width, inside stat-main's narrower column (portrait
+   takes the other 30%). */
+.trouilleville .mana-exp-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* Mana: a row of clickable star images, filled up to the current value. */
+.trouilleville .field.mana {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.trouilleville .mana-stars {
+  display: flex;
+  justify-content: center;
+  gap: 0.15rem;
+}
+
+.trouilleville .mana-container {
+  width: 1.3rem;
+  height: 1.3rem;
+  display: block;
+}
+
+/* Experience: a clickable 1–10 point line, crossed out up to the current value. */
+.trouilleville .field.experience {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.trouilleville .exp-display {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.15rem;
+  flex-wrap: wrap;
+}
+
+.trouilleville .exp-point {
+  position: relative;
+  font-size: 0.95rem;
+  font-weight: 600;
+  width: 1.15rem;
+  height: 1.6rem;
+  text-align: center;
+  color: var(--trouilleville-text);
+}
+
+/* Tilt comes from each button's own --tilt custom property (set inline per point, from
+   stat-display.js's fixed per-position spread) rather than :nth-child selectors — the earlier
+   :nth-child rotation was too subtle at this size to read as "hand-drawn" at all. */
+.trouilleville .exp-point.crossed-line::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("../assets/line.svg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 70%;
+  pointer-events: none;
+  transform: rotate(var(--tilt, 0deg));
+}
+
+/* ---------- Tabs (PC and NPC) ---------- */
+
+.trouilleville .sheet-tabs {
+  display: flex;
+  gap: 1rem;
+  border-bottom: 2px solid var(--trouilleville-border);
+}
+
+.trouilleville .sheet-tabs a {
+  padding: 0.3rem 0.2rem;
+  font-weight: 600;
+  color: var(--trouilleville-text-muted);
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+}
+
+.trouilleville .sheet-tabs a.active {
+  color: var(--trouilleville-accent);
+  border-bottom-color: var(--trouilleville-accent);
+}
+
+.trouilleville .tab {
+  display: none;
+}
+
+.trouilleville .tab.active {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+/* ---------- Item lists (Atouts/Sortilèges, Objets, Faiblesses, Attaques) ---------- */
+
+/* Atouts/Sortilèges and Objets side by side; Faiblesses (outside this grid, in the template)
+   sits full-width beneath both. */
+.trouilleville .item-lists-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+}
+
+.trouilleville .item-list,
+.trouilleville .attacks {
+  background: var(--trouilleville-panel);
+  border: 1px solid var(--trouilleville-border);
+  border-radius: 10px;
+  padding: 0.4rem 0.5rem;
+}
+
+.trouilleville .item-list header,
+.trouilleville .attacks header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 0 0.3rem;
+}
+
+.trouilleville .item-list h3,
+.trouilleville .attacks h2 {
+  margin: 0;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--trouilleville-text-muted);
+}
+
+.trouilleville .item-list header button,
+.trouilleville .attacks header button {
+  padding: 0.2rem 0.45rem;
+  font-size: 0.85rem;
+}
+
+.trouilleville .item-list ol,
+.trouilleville .attacks ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+/* The whole row opens the item for editing (editEntry) — only its "used" checkbox opts out,
+   via its own more-specific data-action. */
+.trouilleville .item-row {
+  display: flex;
+  align-items: center;
+  gap: 0.32rem;
+  padding: 0.16rem 0.32rem;
+  border: 1px solid var(--trouilleville-border);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.trouilleville .item-row:hover {
+  border-color: var(--trouilleville-accent);
+  background: var(--trouilleville-bg);
+}
+
+/* The authentic sheet convention: a Sortilège carries 1+ stars (its Mana cost), an Atout none —
+   the same star shape as the Mana track's empty star (rough_star_solid.svg: the empty star's
+   cleaner outline, solid-filled rather than the filled star's busy hatched-pattern fill — see
+   assets/rough_star_solid.svg), tinted to Esprit's color (the two share a real connection: a
+   Sortilège's cost is spent from Mana). A CSS mask recolors it to a flat color — a plain
+   hue-rotate() filter can't, since the SVG's fill/stroke are black, not a color with hue to
+   rotate. */
+.trouilleville .sortilege-cost {
+  display: inline-flex;
+  gap: 0.15rem;
+  flex: 0 0 auto;
+}
+
+.trouilleville .sortilege-cost-star {
+  display: inline-block;
+  width: 0.65rem;
+  height: 0.65rem;
+  background-color: var(--trouilleville-esprit);
+  -webkit-mask-image: url("../assets/rough_star_solid.svg");
+  mask-image: url("../assets/rough_star_solid.svg");
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+}
+
+.trouilleville .item-name {
+  flex: 1;
+  font-size: 0.8rem;
+  font-weight: 600;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* An entry's modifier (FR-025), shown whenever it's non-zero, as a small circle echoing the
+   stat-block's own circular Corps/Esprit/Frayeur rings instead of a rectangular badge — always
+   that same ring-bordered shape, but only FILLED with a characteristic's color when linked to
+   one; a "general"/unlinked modifier gets the same ring with no fill, reading as "set, but not
+   tied to one characteristic" rather than disappearing. The ring itself always stays black and
+   bold, matching the rest of the sheet's hand-drawn ink borders (checkbox-box, item rows, etc.)
+   — only the fill varies, never the border. Clicking it rolls (FR-027) — a real <button>, so it
+   needs its padding reset against the generic `.trouilleville button` rule. */
+.trouilleville .item-modifier-circle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 1.25rem;
+  height: 1.25rem;
+  padding: 0;
+  border-radius: 50%;
+  font-weight: 700;
+  font-size: 0.6rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--trouilleville-text);
+  border: 1.5px solid var(--trouilleville-text);
+}
+
+.trouilleville .item-modifier-circle:hover {
+  filter: brightness(0.92);
+}
+
+.trouilleville .item-modifier-circle--general {
+  background: transparent;
+}
+
+.trouilleville .item-modifier-circle--corps {
+  background: var(--trouilleville-corps);
+}
+
+.trouilleville .item-modifier-circle--esprit {
+  background: var(--trouilleville-esprit);
+}
+
+.trouilleville .item-modifier-circle--frayeur {
+  background: var(--trouilleville-frayeur);
+}
+
+/* A small hand-drawn heart next to the number instead of plain pink-accent text — damage is
+   measured in health points, so tying it visually back to the same heart used for Health
+   (rough_heart_colored.svg) reads more naturally than an arbitrary accent color. Masked to a
+   solid color rather than tinted via filter, same reliable technique as .sortilege-cost-star
+   and the health overlay (this artwork has several of its own fill colors, not one flat tone a
+   filter could rotate). */
+.trouilleville .attack-damage {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  font-weight: 700;
+  color: var(--trouilleville-text);
+}
+
+/* Masks the same plain solid heart_solid.svg as .heart-icon, not rough_heart_colored.svg — see
+   .heart-icon's own comment for why (the busy original artwork masked as a visibly cracked,
+   two-toned heart instead of one flat color). */
+.trouilleville .attack-damage-icon {
+  display: inline-block;
+  width: 0.95rem;
+  height: 0.8rem;
+  background-color: #d7263d;
+  -webkit-mask-image: url("../assets/heart_solid.svg");
+  mask-image: url("../assets/heart_solid.svg");
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+}
+
+/* Applies the Attack's Damage to whatever token is selected on the canvas
+   (NpcSheet#onApplyDamage) — sized and treated the same as .use-entry (bigger/bolder/black,
+   same box size as the checkbox/modifier circle, per direct feedback on those). */
+.trouilleville .apply-damage {
+  flex: 0 0 auto;
+  width: 1.25rem;
+  height: 1.25rem;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border-color: transparent;
+}
+
+.trouilleville .apply-damage:hover {
+  background: var(--trouilleville-bg);
+  border-color: var(--trouilleville-border);
+}
+
+.trouilleville .apply-damage-icon {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+/* Erases the entry outright (no confirmation dialog — this only removes it from the actor, and
+   re-adding one is a single action). Muted until hovered so it doesn't read as the row's primary
+   affordance (that's clicking the row itself, to edit) or invite accidental clicks. */
+.trouilleville .delete-entry {
+  flex: 0 0 auto;
+  width: 1.25rem;
+  height: 1.25rem;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.05rem;
+  line-height: 1;
+  color: var(--trouilleville-text-muted);
+  background: transparent;
+  border-color: transparent;
+}
+
+.trouilleville .delete-entry:hover {
+  color: #ffffff;
+  background: #c0392b;
+  border-color: #c0392b;
+}
+
+/* The chat-message button every Objet/Atout/Sortilège (and a Faiblesse with a modifier — see
+   PcSheet#entryRow) shows, alongside whatever of the modifier circle/"used" checkbox apply.
+   Unlike .delete-entry, this one stays fully black/bold at rest (not muted) — it's not a
+   destructive action, so there's no reason to downplay it. The icon itself is a genuine outline
+   (stroke, not fill) — speech_bubble.svg draws its own black stroke directly rather than relying
+   on `currentColor`, since that doesn't resolve against this stylesheet's `color` once the SVG
+   is loaded through a plain <img> (same reason dice-icon, right above, is a fixed flat color). */
+.trouilleville .use-entry {
+  flex: 0 0 auto;
+  width: 1.25rem;
+  height: 1.25rem;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border-color: transparent;
+}
+
+.trouilleville .use-entry:hover {
+  background: var(--trouilleville-bg);
+  border-color: var(--trouilleville-border);
+}
+
+.trouilleville .use-entry-icon {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+/*
+ * A fully custom, hand-drawn-styled checkbox: always a plain white box with a border — used
+ * draws a dark, slightly tilted checkmark inside it rather than filling the box with color, so
+ * it reads as a hand-drawn tick rather than a filled toggle. No visible "used" text.
+ *
+ * The real <input type="checkbox"> is made invisible (not display:none — it must stay in the
+ * accessibility tree and keyboard-tabbable, constitution Principle V) and a plain, adjacent
+ * <span class="checkbox-box"> renders the visible box instead. `appearance: none` directly on
+ * the input proved unreliable (a plain, unstyled dark box kept reappearing after toggling) —
+ * this sidesteps fighting the browser's/Foundry's own native checkbox theme entirely, since the
+ * visible element is a <span>, never subject to native checkbox rendering at all.
+ *
+ * --check-tilt (set inline per item, from stat-display.js's checkTiltFromId) nudges the
+ * checkmark's base 40deg rotation so different items' checkmarks don't look identically
+ * machine-stamped — the same idea as the Experience crossed-lines' --tilt.
+ */
+.trouilleville .used-toggle {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  margin: 0;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.trouilleville .used-toggle input[type="checkbox"] {
+  position: absolute;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.trouilleville .checkbox-box {
+  display: inline-block;
+  width: 1.25rem;
+  height: 1.25rem;
+  flex-shrink: 0;
+  background: #ffffff;
+  border: 1.75px solid var(--trouilleville-text);
+  border-radius: 5px;
+  position: relative;
+}
+
+/* Bigger than the box itself and nudged up/left so it pokes past the border on two sides —
+   nothing stops it (no ancestor clips with overflow:hidden) — reads as a tick drawn slightly
+   larger than the box it's ticking, the way an actual handwritten checkmark would. */
+.trouilleville .used-toggle input[type="checkbox"]:checked + .checkbox-box::after {
+  content: "";
+  position: absolute;
+  left: 0.17rem;
+  top: -0.21rem;
+  width: 0.52rem;
+  height: 1.05rem;
+  border: solid var(--trouilleville-text);
+  border-width: 0 3px 3px 0;
+  transform: rotate(calc(40deg + var(--check-tilt, 0deg)));
+}
+
+.trouilleville .used-toggle input[type="checkbox"]:focus-visible + .checkbox-box {
+  outline: 2px solid var(--trouilleville-accent);
+  outline-offset: 2px;
+}
+
+/* ---------- Free-text tabs (PC Notes/Histoire, NPC Description) ---------- */
+
+/* Covers every free-text tab (not just "histoire") so a textarea in any of them — including a
+   future one — fills the tab's width by default instead of falling back to the browser's tiny
+   native textarea size (GM feedback: the NPC Description tab was unusably narrow under the
+   histoire-only selector this used to be). */
+.trouilleville .tab textarea {
+  width: 100%;
+  min-height: 4rem;
+  resize: vertical;
+}
+
+/* ---------- Item sheets (Monster Type, Objet, Atout, Sortilège, Faiblesse, Attaque) ---------- */
+
+.trouilleville.item {
+  gap: 0.6rem;
+}
+
+.trouilleville.item .field {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* The one multi-line field on an item sheet — stacks label above textarea instead of the
+   single-line fields' side-by-side layout, and fills the sheet's width. */
+.trouilleville.item .field.description {
+  align-items: stretch;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.trouilleville.item .field.description textarea {
+  width: 100%;
+  min-height: 4rem;
+  resize: vertical;
+}
+
+.trouilleville.item .field label {
+  margin: 0;
+  min-width: 7rem;
+}
+
+/* The Usable checkbox's own wrapper is also a <label> (the checkbox-box pattern needs one) —
+   reset the field caption's min-width for it specifically so it doesn't get stretched out. */
+.trouilleville.item .field label.used-toggle {
+  min-width: 0;
+}
+
+.trouilleville.item input,
+.trouilleville.item select {
+  flex: 1;
+}
+
+/* A modifier is editable either by typing directly into the number input, or via these
+   flanking +/- buttons (TrouillevilleItemSheet#incrementModifier/#decrementModifier). */
+.trouilleville .modifier-input-group {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  flex: 1;
+}
+
+.trouilleville .modifier-input-group input {
+  flex: 1;
+  text-align: center;
+}
+
+.trouilleville .modifier-input-group button {
+  flex: 0 0 auto;
+  width: 1.8rem;
+  height: 1.8rem;
+  padding: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Only present on a draft (unsaved) item's sheet — pinned to the bottom via margin-top: auto
+   since `.trouilleville`/`.trouilleville.item` is a flex column. */
+.trouilleville.item .draft-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: auto;
+  padding-top: 0.6rem;
+  border-top: 1px solid var(--trouilleville-border);
+}
+
+.trouilleville.item .draft-footer button.primary {
+  background: var(--trouilleville-accent);
+  border-color: var(--trouilleville-accent);
+  color: #ffffff;
+  font-weight: 700;
+}
+
+/* Every DialogV2 this system opens (create-type choice, delete confirmation, the roll-
+   characteristic choice) carries `classes: ["trouilleville-dialog"]` — Foundry's own Dialog
+   chrome isn't a descendant of `.trouilleville`, so there's no stylesheet access to it except
+   through a scoping class passed explicitly like this (constitution Principle V). Its body
+   otherwise defaults to Foundry's current UI theme (dark, if that's what's active), which
+   clashed hard with this system's warm cream palette. Only the content area (`.window-content`),
+   never `.window-header`, same reasoning as PcSheet/NpcSheet's own `classes` exclusion: the
+   title bar is shared native chrome, not this system's to restyle. */
+.trouilleville-dialog .window-content {
+  background: #fbf4e6;
+  color: #2e2a22;
+}
+
+.trouilleville-dialog .window-content p {
+  color: #2e2a22;
+}
+
+/* The roll-characteristic choice (PcSheet#onRollModifier, FR-027) additionally colors each
+   button to match its characteristic — hardcoded colors again, not var(--trouilleville-corps)
+   etc., for the same reason as above (those custom properties don't cascade outside
+   `.trouilleville`'s own subtree). Dark text/border on each light pastel fill for contrast,
+   matching the stat-block circles' own dark-on-light convention. */
+.trouilleville-roll-choice button.corps {
+  background: #f2a5a0;
+  color: #2e2a22;
+  border-color: #2e2a22;
+}
+
+.trouilleville-roll-choice button.esprit {
+  background: #b8acdf;
+  color: #2e2a22;
+  border-color: #2e2a22;
+}
+
+.trouilleville-roll-choice button.frayeur {
+  background: #a8d99f;
+  color: #2e2a22;
+  border-color: #2e2a22;
+}
+
+/* A roll's ChatMessage content (PcSheet/NpcSheet#onRollCharacteristic, #onRollModifier —
+   src/sheets/roll-chat.js) renders in the sidebar chat log, which is Foundry's own shared chrome
+   — not a descendant of `.trouilleville` — so these are scoped under their own uniquely-named
+   classes instead (constitution Principle V), with the stat-block colors hardcoded for the same
+   reason as .trouilleville-roll-choice above. The actor's own portrait plus a characteristic-
+   colored accent and individual die pips (filled for a 4+ success, plain for a miss) replace the
+   previous plain two-line text message. */
+.trouilleville-roll-card {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.4rem 0.5rem;
+  border-radius: 8px;
+  background: #fbf4e6;
+  border: 1px solid #e2d4b7;
+  border-left: 5px solid #e2d4b7;
+}
+
+.trouilleville-roll-card--corps {
+  border-left-color: #f2a5a0;
+}
+
+.trouilleville-roll-card--esprit {
+  border-left-color: #b8acdf;
+}
+
+.trouilleville-roll-card--frayeur {
+  border-left-color: #a8d99f;
+}
+
+.trouilleville-roll-portrait {
+  flex: 0 0 auto;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #2e2a22;
+}
+
+.trouilleville-roll-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.trouilleville-roll-title {
+  font-weight: 700;
+  color: #2e2a22;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* buildUseCard's "Miel a utilisé l'atout XXXX." line reuses the roll card's bold title look,
+   but it's a full sentence rather than a short name — mustn't truncate it the way
+   .trouilleville-roll-title does (that's what originally clipped a long item name to "XXXX
+   temp…"). */
+.trouilleville-use-message {
+  font-weight: 700;
+  color: #2e2a22;
+  white-space: normal;
+}
+
+/* The "Corps 2 +1 → 3" line — spells out the base characteristic value, the modifier, and the
+   resulting pool size explicitly, so it's clear at a glance without mentally adding anything up.
+   The dice icon is the "what kind of roll is this" visual cue. */
+.trouilleville-roll-formula {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #6b6354;
+}
+
+.trouilleville-roll-dice-icon {
+  width: 1rem;
+  height: 1rem;
+  flex: 0 0 auto;
+}
+
+.trouilleville-roll-dice {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin: 0.3rem 0;
+}
+
+.trouilleville-die {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.4rem;
+  height: 1.4rem;
+  border-radius: 4px;
+  background: #ffffff;
+  border: 1.5px solid #e2d4b7;
+  color: #6b6354;
+  font-weight: 700;
+  font-size: 0.75rem;
+}
+
+.trouilleville-die--success {
+  background: #e86fa0;
+  border-color: #2e2a22;
+  color: #ffffff;
+}
+
+.trouilleville-roll-successes {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #6b6354;
+}

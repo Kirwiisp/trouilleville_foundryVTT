@@ -1,0 +1,26 @@
+{{!-- An entry row's trailing controls, always in this order: checkbox | modifier | chat | delete.
+      Shared by the Atouts/Sortilèges, Objets, and Faiblesses lists (pc-item-lists.hbs) so all
+      three stay identical as this grows. Expects the current context to be one `entry` (as
+      built by PcSheet#entryRow). --}}
+{{#if showUsedToggle}}
+  <label class="used-toggle" style="--check-tilt: {{checkTilt}}deg;">
+    <input type="checkbox" class="toggle-used-input" data-item-id="{{id}}" {{#if system.used}}checked{{/if}}
+      aria-label="{{localize 'TROUILLEVILLE.ToggleUsed' name=name}}" />
+    <span class="checkbox-box" aria-hidden="true"></span>
+  </label>
+{{/if}}
+{{#if showModifierCircle}}
+  <button type="button" class="item-modifier-circle item-modifier-circle--{{characteristic}}"
+    data-action="rollModifier" data-item-id="{{id}}" title="{{characteristicLabel}}"
+    aria-label="{{localize 'TROUILLEVILLE.RollModifier' name=name}}">
+    {{modifierLabel}}
+  </button>
+{{/if}}
+{{#if showUseChat}}
+  <button type="button" class="use-entry" data-action="useEntry" data-item-id="{{id}}"
+    aria-label="{{localize 'TROUILLEVILLE.UseEntry' name=name}}">
+    <img class="use-entry-icon" src="systems/trouilleville/assets/speech_bubble.svg" alt="" />
+  </button>
+{{/if}}
+<button type="button" class="delete-entry" data-action="deleteEntry" data-item-id="{{id}}"
+  aria-label="{{localize 'TROUILLEVILLE.DeleteEntry' name=name}}">&times;</button>

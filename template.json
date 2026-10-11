@@ -1,0 +1,16 @@
+{
+  "Actor": {
+    "types": ["pc", "npc"],
+    "pc": {},
+    "npc": {}
+  },
+  "Item": {
+    "types": ["espece", "objet", "atout", "sortilege", "faiblesse", "attaque"],
+    "espece": {},
+    "objet": {},
+    "atout": {},
+    "sortilege": {},
+    "faiblesse": {},
+    "attaque": {}
+  }
+}

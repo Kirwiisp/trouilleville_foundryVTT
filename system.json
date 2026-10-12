@@ -2,7 +2,7 @@
   "id": "trouilleville",
   "title": "Trouilleville",
   "description": "Unofficial implementation of the Trouilleville tabletop system for Foundry Virtual Tabletop, made with the gracious authorization of Makaka Editions. Implements game mechanics, character sheets, and items only — no rulebook content is included.",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "compatibility": {
     "minimum": "14.368",
     "verified": "14.368"

@@ -23,4 +23,97 @@
     <label>{{localize 'TROUILLEVILLE.FrayeurMax'}}</label>
     <input type="number" name="system.frayeurMax" value="{{system.frayeurMax}}" />
   </div>
+
+  <div class="field">
+    <label>{{localize 'TROUILLEVILLE.SanteDepart'}}</label>
+    <input type="number" name="system.santeDepart" value="{{system.santeDepart}}" min="0" />
+    <label>{{localize 'TROUILLEVILLE.AtoutsAChoisir'}}</label>
+    <input type="number" name="system.atoutsAChoisir" value="{{system.atoutsAChoisir}}" min="0" />
+  </div>
+
+  {{!-- faiblesse/peur are SchemaFields (name/modifier/linkedCharacteristic/description), the
+        same shape ITEM_DEFAULTS.faiblesse already uses — not plain strings, so each sub-field
+        needs its own bound input rather than one textarea over the whole object (that rendered
+        "[object Object]", Handlebars' default stringification of a non-string value). No
+        linkedCharacteristic selector here: across all 5 archetypes currently in the bestiaire
+        module, every Faiblesse/Peur is either unlinked or a flat penalty (verified, not
+        assumed) — the field stays in the schema for completeness, just without a dedicated
+        editor control since nothing exercises it yet. --}}
+  <div class="field description archetype-weakness">
+    <label>{{localize 'TROUILLEVILLE.ArchetypeFaiblesse'}}</label>
+    <div class="archetype-weakness-row">
+      <input type="text" name="system.faiblesse.name" value="{{system.faiblesse.name}}"
+        placeholder="{{localize 'TROUILLEVILLE.Name'}}" />
+      <div class="modifier-input-group">
+        <button type="button" data-action="decrementModifier" data-field="faiblesse.modifier"
+          aria-label="{{localize 'TROUILLEVILLE.DecrementModifier'}}">&minus;</button>
+        <input type="number" name="system.faiblesse.modifier" value="{{system.faiblesse.modifier}}" />
+        <button type="button" data-action="incrementModifier" data-field="faiblesse.modifier"
+          aria-label="{{localize 'TROUILLEVILLE.IncrementModifier'}}">+</button>
+      </div>
+    </div>
+    <textarea name="system.faiblesse.description">{{system.faiblesse.description}}</textarea>
+  </div>
+
+  <div class="field description archetype-weakness">
+    <label>{{localize 'TROUILLEVILLE.ArchetypePeur'}}</label>
+    <div class="archetype-weakness-row">
+      <input type="text" name="system.peur.name" value="{{system.peur.name}}"
+        placeholder="{{localize 'TROUILLEVILLE.Name'}}" />
+      <div class="modifier-input-group">
+        <button type="button" data-action="decrementModifier" data-field="peur.modifier"
+          aria-label="{{localize 'TROUILLEVILLE.DecrementModifier'}}">&minus;</button>
+        <input type="number" name="system.peur.modifier" value="{{system.peur.modifier}}" />
+        <button type="button" data-action="incrementModifier" data-field="peur.modifier"
+          aria-label="{{localize 'TROUILLEVILLE.IncrementModifier'}}">+</button>
+      </div>
+    </div>
+    <textarea name="system.peur.description">{{system.peur.description}}</textarea>
+  </div>
+
+  {{!-- Populated via compendium JSON, not hand-typed row-by-row here — no add/remove editor for
+        these two lists exists anywhere else in this system to crib from, so they render
+        read-only. Editing a value still means editing the source data and re-importing. --}}
+  {{#if system.atouts.length}}
+    <section class="field archetype-list">
+      <label>{{localize 'TROUILLEVILLE.ArchetypeAtouts'}}</label>
+      <ul>
+        {{#each system.atouts as |entry|}}
+          <li class="archetype-list-row">
+            <span class="archetype-list-name">
+              {{entry.name}}
+              {{#if entry.obligatoire}}<em>({{localize 'TROUILLEVILLE.ArchetypeObligatoire'}})</em>{{/if}}
+              {{#if (eq entry.linkedCharacteristic "corps")}}
+                <span class="archetype-list-badge">+{{entry.modifier}} {{localize 'TROUILLEVILLE.Corps'}}</span>
+              {{/if}}
+              {{#if (eq entry.linkedCharacteristic "esprit")}}
+                <span class="archetype-list-badge">+{{entry.modifier}} {{localize 'TROUILLEVILLE.Esprit'}}</span>
+              {{/if}}
+              {{#if (eq entry.linkedCharacteristic "frayeur")}}
+                <span class="archetype-list-badge">+{{entry.modifier}} {{localize 'TROUILLEVILLE.Frayeur'}}</span>
+              {{/if}}
+            </span>
+            <p class="archetype-list-description">{{entry.description}}</p>
+          </li>
+        {{/each}}
+      </ul>
+    </section>
+  {{/if}}
+
+  {{#if system.sortileges.length}}
+    <section class="field archetype-list">
+      <label>{{localize 'TROUILLEVILLE.ArchetypeSortileges'}}</label>
+      <ul>
+        {{#each system.sortileges as |entry|}}
+          <li class="archetype-list-row">
+            <span class="archetype-list-name">
+              {{entry.name}}
+              <span class="archetype-list-badge">{{localize 'TROUILLEVILLE.ArchetypeNiveau'}} {{entry.niveau}} — {{entry.cost}} {{localize 'TROUILLEVILLE.Mana'}}</span>
+            </span>
+            <p class="archetype-list-description">{{entry.description}}</p>
+          </li>
+        {{/each}}
+      </ul>
+    </section>
+  {{/if}}
 </div>

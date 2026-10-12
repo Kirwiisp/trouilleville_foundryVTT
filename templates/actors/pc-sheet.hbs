@@ -6,6 +6,18 @@
       <div class="field monster-kind">
         {{#if (eq system.monsterKind.mode "linked")}}
           <h3><span class="monster-kind-name">{{system.monsterKind.name}}</span></h3>
+          {{!-- The archetype's own Faiblesse/Peur and `obligatoire` atouts are auto-added the
+                moment it's linked, and its "choisissez N" picks (atouts/sortilèges/objets) are
+                offered right away too, via a DialogV2 pop-up (monster-kind-picker.js) — not an
+                inline section here, which an earlier version of this tried and which ended up
+                squeezing this very name down to nothing (missing flex-wrap on the flex-row
+                parent). This button only reopens that same dialog, for a pick made after the
+                initial prompt. --}}
+          {{#if hasArchetypePicks}}
+            <button type="button" class="open-archetype-picker" data-action="openArchetypePicker"
+              title="{{localize 'TROUILLEVILLE.ArchetypePickerTitle'}}"
+              aria-label="{{localize 'TROUILLEVILLE.ArchetypePickerTitle'}}">+</button>
+          {{/if}}
           <button type="button" class="unlink-monster-kind" data-action="unlinkMonsterKind"
             title="{{localize 'TROUILLEVILLE.UnlinkMonsterKind'}}"
             aria-label="{{localize 'TROUILLEVILLE.UnlinkMonsterKind'}}">&times;</button>

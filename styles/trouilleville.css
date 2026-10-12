@@ -214,6 +214,35 @@
   display: inline-block;
 }
 
+/* Reopens the archetype's pick-and-add DialogV2 (monster-kind-picker.js) — same hidden-until-
+   hover icon-button treatment as .unlink-monster-kind right beside it, not the inline
+   <details>/flex-basis:100% section an earlier version put here, which squeezed the monster
+   kind's own name down to near nothing (that section's own flex-row parent never had
+   flex-wrap: wrap, so flex-basis:100% had no line to wrap onto). */
+.trouilleville .open-archetype-picker {
+  flex: 0 0 auto;
+  width: 1.25rem;
+  height: 1.25rem;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.05rem;
+  line-height: 1;
+  color: var(--trouilleville-text-muted);
+  background: transparent;
+  border-color: transparent;
+  opacity: 0.45;
+}
+
+.trouilleville .open-archetype-picker:hover,
+.trouilleville .open-archetype-picker:focus-visible {
+  opacity: 1;
+  color: #ffffff;
+  background: var(--trouilleville-accent);
+  border-color: var(--trouilleville-accent);
+}
+
 /* The portrait is the left quarter and spans the full height of the stat block; the right
    three quarters stack Health + the three characteristics, then Mana + Experience. */
 .trouilleville .portrait-stats-row {
@@ -1083,6 +1112,63 @@
    reset the field caption's min-width for it specifically so it doesn't get stretched out. */
 .trouilleville.item .field label.used-toggle {
   min-width: 0;
+}
+
+/* The archetype's single Faiblesse/Peur (monster-kind-sheet.hbs) — name + modifier side by side
+   above the description textarea, reusing .field.description's column stacking for the overall
+   field but laying out its own name/modifier row as a nested flex row. */
+.trouilleville.item .archetype-weakness-row {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.trouilleville.item .archetype-weakness-row input[type="text"] {
+  flex: 1;
+}
+
+.trouilleville.item .archetype-weakness-row .modifier-input-group {
+  flex: 0 0 auto;
+  width: 7rem;
+}
+
+/* Monster Type's read-only Atouts/Sortilèges list (see monster-kind-sheet.hbs) — stacked like
+   .field.description rather than the side-by-side default, since it holds a multi-row <ul>. */
+.trouilleville.item .field.archetype-list {
+  align-items: stretch;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.trouilleville.item .archetype-list ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.trouilleville.item .archetype-list-row {
+  border: 1px solid var(--color-border-light-tertiary, #ccc);
+  border-radius: 4px;
+  padding: 0.4rem 0.6rem;
+}
+
+.trouilleville.item .archetype-list-name {
+  font-weight: bold;
+}
+
+.trouilleville.item .archetype-list-badge {
+  font-weight: normal;
+  font-size: 0.85em;
+  margin-left: 0.4rem;
+  opacity: 0.8;
+}
+
+.trouilleville.item .archetype-list-description {
+  margin: 0.25rem 0 0;
+  font-size: 0.9em;
 }
 
 .trouilleville.item input,

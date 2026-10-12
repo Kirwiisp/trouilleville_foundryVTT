@@ -12,7 +12,12 @@ import {
   healthRedOpacity,
   checkTiltFromId
 } from "../rules/stat-display.js";
-import { listMonsterKindOptions, linkMonsterKindByUuid } from "./monster-kind-picker.js";
+import {
+  listMonsterKindOptions,
+  linkMonsterKindByUuid,
+  openArchetypePickerForActor,
+  hasArchetypePicks
+} from "./monster-kind-picker.js";
 import { escapeHtml } from "./html-utils.js";
 import { buildRollCard, buildUseCard } from "./roll-chat.js";
 
@@ -39,6 +44,7 @@ export class PcSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
       rollCharacteristic: PcSheet.#onRollCharacteristic,
       rollModifier: PcSheet.#onRollModifier,
       unlinkMonsterKind: PcSheet.#onUnlinkMonsterKind,
+      openArchetypePicker: PcSheet.#onOpenArchetypePicker,
       createEntry: PcSheet.#onCreateEntry,
       editEntry: PcSheet.#onEditEntry,
       deleteEntry: PcSheet.#onDeleteEntry,
@@ -72,6 +78,14 @@ export class PcSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
           ...context.system,
           ...applyMonsterKindLink(this.actor.system, monsterKind.system)
         };
+        // Whether the linked archetype still has any non-`obligatoire` Atouts/Sortilèges/Objets
+        // left to pick from — gates the reopen button in pc-sheet.hbs. The picks themselves are
+        // shown in a DialogV2 (monster-kind-picker.js's showArchetypePickerDialog), not built
+        // into this context — it pops up on link and can be reopened via that button, rather
+        // than living in an inline section on the sheet (an earlier version of that design, via
+        // a missing flex-wrap on its flex-row parent, ended up squeezing the monster kind's own
+        // name down to nothing).
+        context.hasArchetypePicks = hasArchetypePicks(monsterKind);
       }
     }
 
@@ -225,9 +239,12 @@ export class PcSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
       if (!item) return super._onDrop(event);
 
       if (item.type === "espece") {
-        await this.actor.update({
-          "system.monsterKind": { mode: "linked", name: item.name, uuid: item.uuid }
-        });
+        // Delegates to the exact same function the dropdown picker uses (monster-kind-picker.js)
+        // instead of duplicating the update() call here, so this path and the picker's can't
+        // drift apart — including the auto-apply-Faiblesse/Peur/obligatoire-atouts behavior,
+        // which previously existed only in prose ("matching what dropping that item on the sheet
+        // does") without actually being shared code.
+        await linkMonsterKindByUuid(this.actor, item.uuid);
         return;
       }
 
@@ -391,6 +408,18 @@ export class PcSheet extends HandlebarsApplicationMixin(ActorSheetV2) {
       }
     ]);
     created?.sheet.render(true);
+  }
+
+  /**
+   * Reopens the linked archetype's "choisissez N" pick-and-add dialog (monster-kind-picker.js's
+   * showArchetypePickerDialog, which already ran once automatically when the archetype was
+   * linked) — for a pick the player skipped the first time, or made a different choice than they
+   * now want. The button itself (pc-sheet.hbs) only renders when `hasArchetypePicks` is true, but
+   * `openArchetypePickerForActor` re-checks that on its own, so this stays harmless even if
+   * something changed between render and click.
+   */
+  static async #onOpenArchetypePicker(event, target) {
+    await openArchetypePickerForActor(this.actor);
   }
 
   /**
